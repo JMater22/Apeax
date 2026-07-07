@@ -4,7 +4,6 @@ import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/shared/product-card";
 import { type Product } from "@/types/product";
 
-// TODO: replace with real fetch by slug from services/chapter.service.ts
 const CHAPTER_PRODUCTS: Record<string, Product[]> = {
   "chapter-one-exceed-limits": [
     {
@@ -12,22 +11,49 @@ const CHAPTER_PRODUCTS: Record<string, Product[]> = {
       slug: "exceed-limits-tee",
       name: "Exceed Limits Tee",
       price: 850,
+      category: "shirt",
       chapterId: "1",
       editionSize: 500,
       unitsSold: 500,
       isSoldOut: true,
       placeholderColor: "bg-apeax-cod-gray",
+      variants: [
+        { id: "s", label: "S", stock: 0 },
+        { id: "m", label: "M", stock: 0 },
+        { id: "l", label: "L", stock: 0 },
+        { id: "xl", label: "XL", stock: 0 },
+      ],
     },
     {
       id: "2",
       slug: "exceed-limits-hoodie",
       name: "Exceed Limits Hoodie",
       price: 1650,
+      category: "hoodie",
       chapterId: "1",
       editionSize: 300,
       unitsSold: 214,
       isSoldOut: false,
       placeholderColor: "bg-apeax-cod-gray",
+      variants: [
+        { id: "s", label: "S", stock: 12 },
+        { id: "m", label: "M", stock: 30 },
+        { id: "l", label: "L", stock: 28 },
+        { id: "xl", label: "XL", stock: 16 },
+      ],
+    },
+    {
+      id: "3",
+      slug: "exceed-limits-cap",
+      name: "Exceed Limits Cap",
+      price: 550,
+      category: "cap",
+      chapterId: "1",
+      editionSize: 200,
+      unitsSold: 90,
+      isSoldOut: false,
+      placeholderColor: "bg-apeax-cod-gray",
+      variants: [{ id: "one-size", label: "One Size", stock: 110 }],
     },
   ],
 };
