@@ -68,21 +68,31 @@ export default async function ChapterDetailPage({ params }: ChapterDetailPagePro
 
   if (!products) notFound();
 
-  return (
-    <>
-      <PageHeader title="Chapter One: Exceed Limits" />
-      <Container className="py-16">
-        <p className="mb-10 max-w-2xl text-muted-foreground">
-          The first act of becoming — where growth begins with breaking your
-          own ceiling. Each piece is limited to its stated edition size and
-          will not be restocked.
-        </p>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </Container>
-    </>
-  );
+    return (
+        <>
+        <PageHeader title="Chapter One: Exceed Limits" />
+
+        <Container className="py-16">
+            <div className="mb-10 flex items-center justify-between">
+            <p className="max-w-2xl font-body text-apeax-cod-gray/70">
+                The first act of becoming — where growth begins with breaking your
+                own ceiling. Each piece is limited to its stated edition size and
+                will not be restocked.
+            </p>
+            
+            <a  href={`/chapters/${slug}/story/act-1`}
+                className="shrink-0 whitespace-nowrap bg-apeax-cod-gray px-6 py-3 font-sans text-xs font-bold uppercase tracking-wide text-white hover:opacity-90"
+            >
+                Read the Story
+            </a>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))}
+            </div>
+        </Container>
+        </>
+    );
 }

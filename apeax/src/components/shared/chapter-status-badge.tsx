@@ -9,5 +9,9 @@ const STATUS_CONFIG: Record<ChapterStatus, { label: string; variant: "default" |
 
 export function ChapterStatusBadge({ status }: { status: ChapterStatus }) {
   const config = STATUS_CONFIG[status];
-  return <Badge variant={config.variant}>{config.label}</Badge>;
+  return (
+    <Badge variant={config.variant} className="font-sans text-[10px] uppercase tracking-wide">
+      {config.label}
+    </Badge>
+  );
 }
