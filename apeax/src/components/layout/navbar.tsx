@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, Search, User, X } from "lucide-react";
-import { PRIMARY_NAV_LINKS } from "@/constants/navigation";
+import { PRIMARY_NAV_LINKS } from "@/lib/constants/navigation";
 import { useCart } from "@/hooks/use-cart";
 import { Container } from "@/components/layout/container";
 
