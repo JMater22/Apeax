@@ -7,20 +7,8 @@ import { Pagination } from "@/components/shared/pagination";
 import { Badge } from "@/components/ui/badge";
 import { PRODUCT_CATEGORIES } from "@/lib/constants/categories";
 import { type SortOption } from "@/lib/constants/sort-options";
-import { type Product, type ProductCategory } from "@/types/product";
-
-const ALL_PRODUCTS: Product[] = [
-  { id: "1", slug: "exceed-limits-tee", name: "Exceed Limits Tee", price: 850, category: "shirt", chapterId: "1", editionSize: 500, unitsSold: 500, isSoldOut: true, placeholderColor: "bg-apeax-cod-gray" },
-  { id: "2", slug: "exceed-limits-hoodie", name: "Exceed Limits Hoodie", price: 1650, category: "hoodie", chapterId: "1", editionSize: 300, unitsSold: 214, isSoldOut: false, placeholderColor: "bg-apeax-cod-gray" },
-  { id: "3", slug: "exceed-limits-cap", name: "Exceed Limits Cap", price: 550, category: "cap", chapterId: "1", editionSize: 200, unitsSold: 90, isSoldOut: false, placeholderColor: "bg-apeax-cod-gray" },
-  { id: "4", slug: "unwritten-tee", name: "Unwritten Tee", price: 850, category: "shirt", chapterId: "2", editionSize: 400, unitsSold: 12, isSoldOut: false, placeholderColor: "bg-apeax-cararra" },
-  { id: "5", slug: "unwritten-hoodie", name: "Unwritten Hoodie", price: 1750, category: "hoodie", chapterId: "2", editionSize: 250, unitsSold: 3, isSoldOut: false, placeholderColor: "bg-apeax-cararra" },
-  { id: "6", slug: "unwritten-cap", name: "Unwritten Cap", price: 600, category: "cap", chapterId: "2", editionSize: 150, unitsSold: 0, isSoldOut: false, placeholderColor: "bg-apeax-cararra" },
-  { id: "7", slug: "becoming-tote", name: "Becoming Tote Bag", price: 450, category: "accessory", chapterId: "1", editionSize: 600, unitsSold: 120, isSoldOut: false, placeholderColor: "bg-apeax-westar" },
-  { id: "8", slug: "becoming-beanie", name: "Becoming Beanie", price: 500, category: "cap", chapterId: "1", editionSize: 300, unitsSold: 300, isSoldOut: true, placeholderColor: "bg-apeax-westar" },
-  { id: "9", slug: "ascent-tee", name: "Ascent Tee", price: 900, category: "shirt", chapterId: "1", editionSize: 400, unitsSold: 88, isSoldOut: false, placeholderColor: "bg-apeax-cod-gray" },
-  { id: "10", slug: "ascent-hoodie", name: "Ascent Hoodie", price: 1800, category: "hoodie", chapterId: "1", editionSize: 200, unitsSold: 45, isSoldOut: false, placeholderColor: "bg-apeax-cod-gray" },
-];
+import { type ProductCategory } from "@/types/product";
+import { ALL_PRODUCTS } from "@/lib/data/products";
 
 const PAGE_SIZE = 8;
 
