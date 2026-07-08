@@ -1,9 +1,15 @@
+import { Hero } from "@/features/home/hero";
+import { FeaturedCollections } from "@/features/home/featured-collections";
+import { FeaturedProducts } from "@/features/home/featured-products";
+import { StoryPreview } from "@/features/home/story-preview";
+
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1 className="font-condensed text-4xl uppercase text-foreground">
-        APEAX
-      </h1>
-    </main>
+    <>
+      <Hero />
+      <FeaturedCollections />
+      <FeaturedProducts />
+      <StoryPreview />
+    </>
   );
 }

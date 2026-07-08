@@ -55,6 +55,10 @@
 }
 
 @theme inline {
+  /* Benzin-Medium is a licensed display font used for large headlines in the
+     Figma design (STATE OF BECOMING, new in, etc). It's not on Google Fonts —
+     falls back to Bebas Neue until the licensed font file is added. */
+  --font-display: var(--font-bebas-neue), ui-sans-serif, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
