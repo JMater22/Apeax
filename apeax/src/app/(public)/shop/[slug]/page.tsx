@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { PageHeader } from "@/components/shared/page-header";
 import { Container } from "@/components/layout/container";
 import { ProductGallery } from "@/components/shared/product-gallery";
 import { VariantSelector } from "@/components/shared/variant-selector";
+import { ProductDetailsSection } from "@/components/shared/product-details-section";
 import { ProductCard } from "@/components/shared/product-card";
 import { ReviewsSection } from "@/components/shared/reviews-section";
 import { getProductBySlug, getRelatedProducts } from "@/lib/data/products";
@@ -14,7 +16,7 @@ interface ProductDetailPageProps {
 }
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const { slug } = await params;    
+  const { slug } = await params;
   const product = getProductBySlug(slug);
 
   if (!product) notFound();
@@ -28,7 +30,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
       <PageHeader title={product.name} />
       <Container className="py-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
-          <ProductGallery productName={product.name} placeholderColor={product.placeholderColor} />
+          <ProductGallery productName={product.name} imageUrl={product.imageUrl} />
 
           <div>
             <h1 className="font-condensed text-3xl uppercase tracking-wide text-apeax-cod-gray">
@@ -44,22 +46,31 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               </p>
             )}
 
-            <p className="mt-6 font-body text-sm leading-relaxed text-apeax-cod-gray/80">
-              Part of the APEAX story-driven collection. Every piece carries
-              the narrative of its chapter — worn, not just bought.
-            </p>
+            {product.narrativeHook && product.chapterId && (
+              <p className="mt-4 font-body text-sm italic leading-relaxed text-apeax-cod-gray/70">
+                {product.narrativeHook}{" "}
+                <Link
+                  href={`/chapters/chapter-one-exceed-limits`}
+                  className="not-italic underline underline-offset-2 hover:text-apeax-cod-gray"
+                >
+                  Read the story
+                </Link>
+              </p>
+            )}
 
             {product.variants && product.variants.length > 0 && (
-                <div className="mt-8">
-                    <VariantSelector
-                    productSlug={product.slug}
-                    productName={product.name}
-                    price={product.price}
-                    placeholderColor={product.placeholderColor}
-                    variants={product.variants}
-                    />
-                </div>
+              <div className="mt-8">
+                <VariantSelector
+                  productSlug={product.slug}
+                  productName={product.name}
+                  price={product.price}
+                  placeholderColor={product.placeholderColor}
+                  variants={product.variants}
+                />
+              </div>
             )}
+
+            {product.details && <ProductDetailsSection details={product.details} />}
           </div>
         </div>
 

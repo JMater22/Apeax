@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Container } from "@/components/layout/container";
 
 export function StoryPreview() {
@@ -13,8 +14,14 @@ export function StoryPreview() {
 
       <Container className="flex flex-col gap-16 pb-20 md:gap-24 md:pb-32">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16">
-          {/* TODO: replace with real "About Us" photography */}
-          <div className="aspect-[529/680] w-full max-w-[480px] justify-self-center rounded-sm bg-apeax-cod-gray" />
+          <div className="relative aspect-[529/680] w-full max-w-[480px] justify-self-center overflow-hidden rounded-sm">
+            <Image
+              src="/images/mock-lookbook/Story-Preview.png"
+              alt="APEAX About Us"
+              fill
+              className="object-cover"
+            />
+          </div>
           <div>
             <h3 className="mb-6 font-display text-[32px] text-apeax-cod-gray">About Us</h3>
             <p className="font-body text-[24px] leading-[28px] text-apeax-cod-gray">
@@ -32,8 +39,14 @@ export function StoryPreview() {
               someone unforgettable through the process of becoming yourself.
             </p>
           </div>
-          {/* TODO: replace with real "Our Story" photography */}
-          <div className="order-1 aspect-[218/365] w-full max-w-[300px] justify-self-center rounded-sm bg-apeax-cod-gray md:order-2" />
+          <div className="relative order-1 aspect-[218/365] w-full max-w-[300px] justify-self-center overflow-hidden rounded-sm md:order-2">
+            <Image
+              src="/images/mock-lookbook/Story-Preview.png"
+              alt="APEAX Our Story"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </Container>
 

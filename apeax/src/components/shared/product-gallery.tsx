@@ -2,41 +2,44 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { ProductPlaceholder } from "@/components/shared/product-placeholder";
+import { BrandImage } from "@/components/shared/brand-image";
 
 interface ProductGalleryProps {
   productName: string;
-  placeholderColor?: string;
+  imageUrl?: string;
 }
 
-const PLACEHOLDER_VIEWS = ["Front", "Back", "Detail", "Worn"];
+const WORN_VIEW_IMAGE = "/images/mock-lookbook/Gallery-Worn-View.png";
 
-export function ProductGallery({ productName }: ProductGalleryProps) {
+export function ProductGallery({ productName, imageUrl }: ProductGalleryProps) {
+  const views = [
+    { label: "Front", src: imageUrl },
+    { label: "Worn", src: WORN_VIEW_IMAGE },
+  ];
   const [activeView, setActiveView] = useState(0);
 
   return (
     <div>
-      <div
-        className="aspect-[4/5] w-full overflow-hidden rounded-sm"
-        role="img"
-        aria-label={`${productName} — ${PLACEHOLDER_VIEWS[activeView]} view`}
-      >
-        <ProductPlaceholder className="h-full w-full" />
+      <div className="relative aspect-[4/5] w-full">
+        <BrandImage
+          src={views[activeView].src}
+          alt={`${productName} — ${views[activeView].label} view`}
+          className="h-full w-full"
+        />
       </div>
       <div className="mt-3 grid grid-cols-4 gap-2">
-        {PLACEHOLDER_VIEWS.map((view, index) => (
+        {views.map((view, index) => (
           <button
-            key={view}
+            key={view.label}
             onClick={() => setActiveView(index)}
             className={cn(
-              "aspect-square overflow-hidden rounded-sm border-2",
+              "relative aspect-square overflow-hidden rounded-sm border-2",
               index === activeView ? "border-apeax-cod-gray" : "border-transparent opacity-60",
             )}
-            aria-label={`Show ${view} view`}
+            aria-label={`Show ${view.label} view`}
             aria-pressed={index === activeView}
           >
-            <ProductPlaceholder className="h-full w-full" />
-            <span className="sr-only">{view}</span>
+            <BrandImage src={view.src} alt="" className="h-full w-full" />
           </button>
         ))}
       </div>

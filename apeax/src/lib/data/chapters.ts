@@ -1,6 +1,5 @@
 import { type Chapter } from "@/types/chapter";
 
-// TODO: replace with a real fetch from services/chapter.service.ts (Sprint 7)
 export const CHAPTERS: Chapter[] = [
   {
     id: "1",
@@ -11,6 +10,7 @@ export const CHAPTERS: Chapter[] = [
     releaseDate: "2026-06-01",
     status: "live",
     placeholderColor: "bg-apeax-cod-gray",
+    imageUrl: "/images/mock-lookbook/Chapter-1-Exceed-Limits.png",
   },
   {
     id: "2",
@@ -21,6 +21,7 @@ export const CHAPTERS: Chapter[] = [
     releaseDate: "2026-09-01",
     status: "upcoming",
     placeholderColor: "bg-muted",
+    imageUrl: "/images/mock-lookbook/Chapter-2-Unwritten.png",
   },
 ];
 
