@@ -2,41 +2,40 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ProductPlaceholder } from "@/components/shared/product-placeholder";
 
 interface ProductGalleryProps {
   productName: string;
   placeholderColor?: string;
 }
 
-// TODO: swap placeholder blocks for real product photography once available
 const PLACEHOLDER_VIEWS = ["Front", "Back", "Detail", "Worn"];
 
-export function ProductGallery({ productName, placeholderColor }: ProductGalleryProps) {
+export function ProductGallery({ productName }: ProductGalleryProps) {
   const [activeView, setActiveView] = useState(0);
 
   return (
     <div>
       <div
-        className={cn(
-          "aspect-[4/5] w-full rounded-sm",
-          placeholderColor ?? "bg-apeax-cod-gray",
-        )}
+        className="aspect-[4/5] w-full overflow-hidden rounded-sm"
         role="img"
         aria-label={`${productName} — ${PLACEHOLDER_VIEWS[activeView]} view`}
-      />
+      >
+        <ProductPlaceholder className="h-full w-full" />
+      </div>
       <div className="mt-3 grid grid-cols-4 gap-2">
         {PLACEHOLDER_VIEWS.map((view, index) => (
           <button
             key={view}
             onClick={() => setActiveView(index)}
             className={cn(
-              "aspect-square rounded-sm border-2 text-[10px] uppercase tracking-wide",
-              placeholderColor ?? "bg-apeax-cod-gray",
+              "aspect-square overflow-hidden rounded-sm border-2",
               index === activeView ? "border-apeax-cod-gray" : "border-transparent opacity-60",
             )}
             aria-label={`Show ${view} view`}
             aria-pressed={index === activeView}
           >
+            <ProductPlaceholder className="h-full w-full" />
             <span className="sr-only">{view}</span>
           </button>
         ))}
