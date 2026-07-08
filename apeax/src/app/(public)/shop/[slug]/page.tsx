@@ -14,7 +14,7 @@ interface ProductDetailPageProps {
 }
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const { slug } = await params;
+  const { slug } = await params;    
   const product = getProductBySlug(slug);
 
   if (!product) notFound();
@@ -50,9 +50,15 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </p>
 
             {product.variants && product.variants.length > 0 && (
-              <div className="mt-8">
-                <VariantSelector variants={product.variants} />
-              </div>
+                <div className="mt-8">
+                    <VariantSelector
+                    productSlug={product.slug}
+                    productName={product.name}
+                    price={product.price}
+                    placeholderColor={product.placeholderColor}
+                    variants={product.variants}
+                    />
+                </div>
             )}
           </div>
         </div>
