@@ -5,7 +5,7 @@ import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/shared/product-card";
 import { STORY_CHAPTERS } from "@/lib/data/story-chapters";
 import { type Product } from "@/types/product";
-
+import { ALL_PRODUCTS } from "@/lib/data/products";
 interface StoryReaderPageProps {
   params: Promise<{ slug: string; act: string }>;
 }
@@ -77,44 +77,8 @@ export default async function StoryReaderPage({ params }: StoryReaderPageProps) 
   );
 }
 
-const CHAPTER_ONE_PRODUCTS: Product[] = [
-  {
-    id: "1",
-    slug: "exceed-limits-tee",
-    name: "Exceed Limits Tee",
-    price: 850,
-    category: "shirt",
-    editionSize: 500,
-    unitsSold: 500,
-    isSoldOut: true,
-    placeholderColor: "bg-apeax-cod-gray",
-  },
-  {
-    id: "2",
-    slug: "exceed-limits-hoodie",
-    name: "Exceed Limits Hoodie",
-    price: 1650,
-    category: "hoodie",
-    editionSize: 300,
-    unitsSold: 214,
-    isSoldOut: false,
-    placeholderColor: "bg-apeax-cod-gray",
-  },
-  {
-    id: "3",
-    slug: "exceed-limits-cap",
-    name: "Exceed Limits Cap",
-    price: 550,
-    category: "cap",
-    editionSize: 200,
-    unitsSold: 90,
-    isSoldOut: false,
-    placeholderColor: "bg-apeax-cod-gray",
-  },
-];
-
 function RelatedMerch({ productSlugs }: { productSlugs: string[] }) {
-  const products = CHAPTER_ONE_PRODUCTS.filter((p) => productSlugs.includes(p.slug));
+  const products = ALL_PRODUCTS.filter((p) => productSlugs.includes(p.slug));
   return (
     <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
       {products.map((product) => (
