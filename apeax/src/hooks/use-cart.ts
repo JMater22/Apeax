@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "@/lib/cart-context";
 
-/**
- * Placeholder implementation. Once Sprint 4/7 land, this should read from a
- * CartContext backed by the NestJS API instead of local component state.
- */
 export function useCart() {
-  const [itemCount] = useState(0);
-  return { itemCount };
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 }
