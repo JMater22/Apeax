@@ -56,7 +56,7 @@ export const ALL_PRODUCTS: Product[] = [
   {
     id: "8", slug: "becoming-beanie", name: "Becoming Beanie", price: 500,
     category: "cap", chapterId: "1", editionSize: 300, unitsSold: 300, isSoldOut: true,
-    placeholderColor: "bg-apeax-westar",
+    placeholderColor: "bg-apeax-westar", imageUrl: "/images/mock-lookbook/Beanie-Dark-Palette.png",
     variants: [{ id: "one-size", label: "One Size", stock: 0 }],
     details: { material: "100% Acrylic Knit", fit: "One Size, Stretch Fit", care: ["Hand wash cold", "Lay flat to dry"] },
   },
