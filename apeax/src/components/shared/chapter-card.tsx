@@ -6,11 +6,11 @@ import { type Chapter } from "@/types/chapter";
 export function ChapterCard({ chapter }: { chapter: Chapter }) {
   return (
     <Link href={`/chapters/${chapter.slug}`} className="group block">
-      <div className="relative aspect-[4/5] w-full">
+      <div className="relative aspect-[4/5] w-full overflow-hidden">
         <BrandImage
           src={chapter.imageUrl}
           alt={chapter.title}
-          className="h-full w-full"
+          className="h-full w-full transition-transform duration-500 ease-out group-hover:scale-105"
           placeholderVariant={chapter.status === "upcoming" ? "light" : "dark"}
         />
         <div className="absolute left-3 top-3">

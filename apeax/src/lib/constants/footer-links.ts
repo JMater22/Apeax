@@ -9,7 +9,7 @@ export interface FooterLinkGroup {
 }
 
 export const FOOTER_TOP_LINKS: FooterLink[] = [
-  { label: "Collection", href: "/collections" },
+  { label: "Chapters", href: "/chapters" },
   { label: "Shop", href: "/shop" },
   { label: "Our Story", href: "/about" },
 ];

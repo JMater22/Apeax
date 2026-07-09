@@ -10,7 +10,6 @@ import { ReviewsSection } from "@/components/shared/reviews-section";
 import { getProductBySlug, getRelatedProducts } from "@/lib/data/products";
 import { getReviewsForProduct, getAverageRating } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/format-currency";
-
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
