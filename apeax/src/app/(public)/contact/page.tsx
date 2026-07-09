@@ -2,6 +2,11 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Container } from "@/components/layout/container";
 import { ContactForm } from "@/components/shared/contact-form";
 import { SOCIAL_LINKS } from "@/lib/constants/footer-links";
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Contact | APEAX",
+  description: "Get in touch with APEAX — questions about orders, collaborations, or the story.",
+};  
 
 export default function ContactPage() {
   return (

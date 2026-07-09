@@ -11,6 +11,20 @@ import { getProductBySlug, getRelatedProducts } from "@/lib/data/products";
 import { getReviewsForProduct, getAverageRating } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/format-currency";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
+  if (!product) return { title: "Product Not Found | APEAX" };
+  return {
+    title: `${product.name} | APEAX`,
+    description: product.narrativeHook ?? `Shop the ${product.name} — part of the APEAX limited edition collection.`,
+  };
+}
+
+
+
 interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
 }

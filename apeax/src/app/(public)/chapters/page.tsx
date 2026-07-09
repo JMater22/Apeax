@@ -2,8 +2,12 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Container } from "@/components/layout/container";
 import { ChapterCard } from "@/components/shared/chapter-card"
 import { CHAPTERS } from "@/lib/data/chapters";
+import type { Metadata } from "next"
 // TODO: replace with a real fetch from services/chapter.service.ts (Sprint 7)
-
+export const metadata: Metadata = {
+  title: "Chapters | APEAX",
+  description: "Explore every APEAX chapter — limited drops, each told through an original story.",
+};
 export default function ChaptersPage() {
   return (
     <>
