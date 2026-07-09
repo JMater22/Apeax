@@ -2,8 +2,14 @@ export type ProductCategory = "shirt" | "hoodie" | "cap" | "accessory";
 
 export interface ProductVariant {
   id: string;
-  label: string;       // "S", "M", "L", "XL" for shirts — or "One Size" for caps
+  label: string;
   stock: number;
+}
+
+export interface ProductDetails {
+  material: string;        // "100% Heavyweight Cotton"
+  fit: string;              // "Oversized Fit"
+  care: string[];           // ["Machine wash cold", "Do not bleach", ...]
 }
 
 export interface Product {
@@ -18,5 +24,7 @@ export interface Product {
   editionSize?: number;
   unitsSold?: number;
   isSoldOut?: boolean;
-  variants?: ProductVariant[]; // omit entirely for one-size items like caps
+  variants?: ProductVariant[];
+  details?: ProductDetails;
+  narrativeHook?: string;   // short 1-2 sentence story tie-in, NOT the full Act
 }

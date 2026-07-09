@@ -1,17 +1,18 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { ChapterStatusBadge } from "@/components/shared/chapter-status-badge";
+import { BrandImage } from "@/components/shared/brand-image";
 import { type Chapter } from "@/types/chapter";
 
 export function ChapterCard({ chapter }: { chapter: Chapter }) {
   return (
     <Link href={`/chapters/${chapter.slug}`} className="group block">
-      <div
-        className={cn(
-          "relative aspect-[4/5] w-full rounded-sm",
-          chapter.placeholderColor ?? "bg-apeax-cod-gray",
-        )}
-      >
+      <div className="relative aspect-[4/5] w-full">
+        <BrandImage
+          src={chapter.imageUrl}
+          alt={chapter.title}
+          className="h-full w-full"
+          placeholderVariant={chapter.status === "upcoming" ? "light" : "dark"}
+        />
         <div className="absolute left-3 top-3">
           <ChapterStatusBadge status={chapter.status} />
         </div>

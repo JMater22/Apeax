@@ -1,14 +1,15 @@
 export interface Act {
   id: string;
   slug: string;
-  number: number;          // 1, 2, 3...
-  title: string;            // "The Breaking Point"
-  content: string;          // full narrative text for this act
+  number: number;
+  title: string;
+  content: string;
+  featuredProductSlug: string;  // the one merch item this Act tells the story of
 }
 
 export interface StoryChapter {
-  chapterSlug: string;      // links to the Chapter (drop) this story belongs to
-  title: string;             // "Chapter One: Exceed Limits"
+  chapterSlug: string;
+  title: string;
   acts: Act[];
-  relatedProductSlugs: string[];
+  relatedProductSlugs: string[]; // fallback "shop the full chapter" grid, shown after the last act
 }

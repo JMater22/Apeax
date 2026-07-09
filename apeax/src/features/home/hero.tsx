@@ -1,9 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
   return (
     <section className="relative flex h-[70vh] min-h-[480px] w-full items-end border-b-2 border-apeax-westar bg-apeax-cod-gray md:h-[85vh]">
-      {/* TODO: swap for real hero photography once available */}
+      <Image
+        src="/images/mock-lookbook/Hero.png"
+        alt="APEAX latest lookbook"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
 
       <div className="relative z-10 flex flex-col gap-6 px-6 pb-16 md:px-12 md:pb-24">
         <h1 className="font-display text-[48px] uppercase leading-[0.95] text-white md:text-[96px]">

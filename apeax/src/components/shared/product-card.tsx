@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { BrandImage } from "@/components/shared/brand-image";
 import { formatCurrency } from "@/lib/format-currency";
 import { type Product } from "@/types/product";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/shop/${product.slug}`} className="group block">
-      <div className={cn("relative aspect-[3/4] w-full rounded-sm bg-apeax-cararra", product.placeholderColor)}>
+      <div className="relative aspect-[3/4] w-full">
+        <BrandImage src={product.imageUrl} alt={product.name} className="h-full w-full" />
         {product.isSoldOut && (
           <div className="absolute left-2 top-2">
             <Badge variant="destructive" className="font-sans text-[10px] uppercase tracking-wide">

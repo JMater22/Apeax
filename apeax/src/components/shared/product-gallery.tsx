@@ -2,42 +2,49 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { BrandImage } from "@/components/shared/brand-image";
 
 interface ProductGalleryProps {
   productName: string;
-  placeholderColor?: string;
+  imageUrl?: string;
 }
 
-// TODO: swap placeholder blocks for real product photography once available
-const PLACEHOLDER_VIEWS = ["Front", "Back", "Detail", "Worn"];
+const BACK_VIEW_IMAGE = "/images/mock-lookbook/Tee-Back-View.png";
+const DETAIL_VIEW_IMAGE = "/images/mock-lookbook/Tee-Detail-View.png";
+const WORN_VIEW_IMAGE = "/images/mock-lookbook/Gallery-Worn-View.png";
 
-export function ProductGallery({ productName, placeholderColor }: ProductGalleryProps) {
+export function ProductGallery({ productName, imageUrl }: ProductGalleryProps) {
+  const views = [
+    { label: "Front", src: imageUrl },
+    { label: "Back", src: BACK_VIEW_IMAGE },
+    { label: "Detail", src: DETAIL_VIEW_IMAGE },
+    { label: "Worn", src: WORN_VIEW_IMAGE },
+  ];
   const [activeView, setActiveView] = useState(0);
 
   return (
     <div>
-      <div
-        className={cn(
-          "aspect-[4/5] w-full rounded-sm",
-          placeholderColor ?? "bg-apeax-cod-gray",
-        )}
-        role="img"
-        aria-label={`${productName} — ${PLACEHOLDER_VIEWS[activeView]} view`}
-      />
+      <div className="relative aspect-[4/5] w-full">
+        <BrandImage
+          src={views[activeView].src}
+          alt={`${productName} — ${views[activeView].label} view`}
+          className="h-full w-full"
+          sizes="(max-width: 768px) 90vw, 45vw"
+        />
+      </div>
       <div className="mt-3 grid grid-cols-4 gap-2">
-        {PLACEHOLDER_VIEWS.map((view, index) => (
+        {views.map((view, index) => (
           <button
-            key={view}
+            key={view.label}
             onClick={() => setActiveView(index)}
             className={cn(
-              "aspect-square rounded-sm border-2 text-[10px] uppercase tracking-wide",
-              placeholderColor ?? "bg-apeax-cod-gray",
+              "relative aspect-square overflow-hidden rounded-sm border-2",
               index === activeView ? "border-apeax-cod-gray" : "border-transparent opacity-60",
             )}
-            aria-label={`Show ${view} view`}
+            aria-label={`Show ${view.label} view`}
             aria-pressed={index === activeView}
           >
-            <span className="sr-only">{view}</span>
+            <BrandImage src={view.src} alt="" className="h-full w-full" sizes="120px" />
           </button>
         ))}
       </div>
