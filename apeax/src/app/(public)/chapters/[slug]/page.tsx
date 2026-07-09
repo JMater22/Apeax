@@ -3,6 +3,19 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/shared/product-card";
 import { getProductsByChapter } from "@/lib/data/products";
+import type { Metadata } from "next";
+import { getChapterBySlug } from "@/lib/data/chapters";
+
+export async function generateMetadata({ params }: ChapterDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const chapter = getChapterBySlug(slug);
+  if (!chapter) return { title: "Chapter Not Found | APEAX" };
+  return {
+    title: `${chapter.title} | APEAX`,
+    description: chapter.storyTeaser,
+  };
+}
+
 
 
 interface ChapterDetailPageProps {

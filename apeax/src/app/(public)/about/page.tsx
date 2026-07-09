@@ -1,6 +1,12 @@
 import { PageHeader } from "@/components/shared/page-header";
 import { Container } from "@/components/layout/container";
 import { BrandImage } from "@/components/shared/brand-image";
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About | APEAX",
+  description: "APEAX is not about reaching perfection. It's about becoming someone unforgettable through the process of becoming yourself.",
+};
 
 export default function AboutPage() {
   return (

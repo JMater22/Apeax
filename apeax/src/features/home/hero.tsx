@@ -19,7 +19,7 @@ export function Hero() {
           <br />
           Becoming.
         </h1>
-        <p className="max-w-md font-body text-sm uppercase leading-relaxed tracking-wide text-white/70 md:text-base">
+        <p className="max-w-md font-body text-sm uppercase leading-relaxed tracking-wide text-white/90 md:text-base">
           APEAX is more than clothing. It&apos;s a mindset. A commitment to
           growth. A state of becoming.
         </p>

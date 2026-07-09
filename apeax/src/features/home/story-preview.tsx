@@ -33,9 +33,9 @@ export function StoryPreview() {
           </div>
           <div className="relative md:pl-6">
             <BrandAsterisk className="pointer-events-none absolute -right-10 top-1/2 hidden h-56 w-56 -translate-y-1/2 text-apeax-cod-gray/[0.05] md:block" />
-            <span className="relative font-sans text-xs uppercase tracking-[2px] text-apeax-cod-gray/50">
-              01 — About Us
-            </span>
+              <span aria-hidden="true" className="relative font-sans text-xs uppercase tracking-[2px] text-apeax-cod-gray/70">
+                01 — About Us
+              </span>
             <h3 className="relative mt-2 font-display text-[36px] leading-[1.05] text-apeax-cod-gray md:text-[44px]">
               About Us
             </h3>
@@ -49,10 +49,10 @@ export function StoryPreview() {
         {/* Our Story */}
         <div className="relative grid grid-cols-1 items-center gap-10 md:grid-cols-[1fr_0.8fr] md:gap-16">
           <div className="relative order-2 md:order-1 md:pr-6">
-            <BrandAsterisk className="pointer-events-none absolute -left-10 top-1/2 hidden h-56 w-56 -translate-y-1/2 text-apeax-cod-gray/[0.05] md:block" />
-            <span className="relative font-sans text-xs uppercase tracking-[2px] text-apeax-cod-gray/50">
-              02 — Our Story
-            </span>
+            <BrandAsterisk className=" pointer-events-none absolute -left-10 top-1/2 hidden h-56 w-56 -translate-y-1/2 text-apeax-cod-gray/[0.05] md:block" />
+              <span aria-hidden="true"className="relative font-sans text-xs uppercase tracking-[2px] text-apeax-cod-gray/70">
+                02 — Our Story
+              </span>
             <h3 className="relative mt-2 font-display text-[36px] leading-[1.05] text-apeax-cod-gray md:text-[44px]">
               Our Story
             </h3>
