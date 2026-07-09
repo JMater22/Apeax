@@ -23,7 +23,7 @@ export function ProductCard({ product }: { product: Product }) {
             {product.name}
           </span>
           {product.editionSize && (
-            <span className="font-sans text-xs text-apeax-cod-gray/60">
+            <span className="font-sans text-xs text-apeax-cod-gray/70">
               {product.unitsSold ?? 0} / {product.editionSize} claimed
             </span>
           )}
