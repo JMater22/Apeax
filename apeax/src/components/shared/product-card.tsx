@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group">
       <Link href={`/shop/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] w-full overflow-hidden">
+        <div className="relative aspect-3/4 w-full overflow-hidden">
           <BrandImage
             src={product.imageUrl}
             alt={product.name}
