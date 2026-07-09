@@ -95,4 +95,4 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-Built by [Your Name] — [portfolio link] · [LinkedIn] · [GitHub]
+Built by Jonathan C. Melu — [portfolio link] · [LinkedIn] · [GitHub]
