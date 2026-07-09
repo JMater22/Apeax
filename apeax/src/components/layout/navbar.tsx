@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, User, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { PRIMARY_NAV_LINKS } from "@/lib/constants/navigation";
 import { useCart } from "@/hooks/use-cart";
 import { Container } from "@/components/layout/container";
+import { NavbarSearch } from "@/components/shared/navbar-search";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,12 +39,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <button
-            aria-label="Search"
-            className="hidden text-white/80 hover:text-white lg:block"
-              >
-            <Search size={18} />
-          </button>
+          <NavbarSearch />
           <Link href="/account" aria-label="Account" className="text-white/80 hover:text-white">
             <User size={18} />
           </Link>
