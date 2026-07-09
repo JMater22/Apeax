@@ -4,7 +4,6 @@ import { ChapterCard } from "@/components/shared/chapter-card"
 import { CHAPTERS } from "@/lib/data/chapters";
 // TODO: replace with a real fetch from services/chapter.service.ts (Sprint 7)
 
-
 export default function ChaptersPage() {
   return (
     <>

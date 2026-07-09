@@ -9,11 +9,15 @@ interface ProductGalleryProps {
   imageUrl?: string;
 }
 
+const BACK_VIEW_IMAGE = "/images/mock-lookbook/Tee-Back-View.png";
+const DETAIL_VIEW_IMAGE = "/images/mock-lookbook/Tee-Detail-View.png";
 const WORN_VIEW_IMAGE = "/images/mock-lookbook/Gallery-Worn-View.png";
 
 export function ProductGallery({ productName, imageUrl }: ProductGalleryProps) {
   const views = [
     { label: "Front", src: imageUrl },
+    { label: "Back", src: BACK_VIEW_IMAGE },
+    { label: "Detail", src: DETAIL_VIEW_IMAGE },
     { label: "Worn", src: WORN_VIEW_IMAGE },
   ];
   const [activeView, setActiveView] = useState(0);
@@ -25,6 +29,7 @@ export function ProductGallery({ productName, imageUrl }: ProductGalleryProps) {
           src={views[activeView].src}
           alt={`${productName} — ${views[activeView].label} view`}
           className="h-full w-full"
+          sizes="(max-width: 768px) 90vw, 45vw"
         />
       </div>
       <div className="mt-3 grid grid-cols-4 gap-2">
@@ -39,7 +44,7 @@ export function ProductGallery({ productName, imageUrl }: ProductGalleryProps) {
             aria-label={`Show ${view.label} view`}
             aria-pressed={index === activeView}
           >
-            <BrandImage src={view.src} alt="" className="h-full w-full" />
+            <BrandImage src={view.src} alt="" className="h-full w-full" sizes="120px" />
           </button>
         ))}
       </div>

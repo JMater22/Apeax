@@ -14,6 +14,7 @@ export const STORY_CHAPTERS: Record<string, StoryChapter> = {
         title: "The Breaking Point",
         content:
           "Every ceiling was built by someone who stopped climbing. This is where the story begins — not with comfort, but with the decision to exceed what was thought possible.",
+        featuredProductSlug: "exceed-limits-tee",
       },
       {
         id: "act-2",
@@ -22,6 +23,7 @@ export const STORY_CHAPTERS: Record<string, StoryChapter> = {
         title: "The Ascent",
         content:
           "Growth is not a single leap. It is a repeated act of discomfort, chosen again and again, until the limit that once felt permanent becomes a memory.",
+        featuredProductSlug: "exceed-limits-hoodie",
       },
       {
         id: "act-3",
@@ -30,6 +32,7 @@ export const STORY_CHAPTERS: Record<string, StoryChapter> = {
         title: "A State of Becoming",
         content:
           "There is no arrival. Only the next version of yourself, and the next. APEAX exists for those who understand that becoming is the point — not the destination.",
+        featuredProductSlug: "exceed-limits-cap",
       },
     ],
   },
