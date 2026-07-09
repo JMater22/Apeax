@@ -6,8 +6,7 @@ import { ProductCard } from "@/components/shared/product-card";
 import { STORY_CHAPTERS } from "@/lib/data/story-chapters";
 import { getProductBySlug, ALL_PRODUCTS } from "@/lib/data/products";
 import { formatCurrency } from "@/lib/format-currency";
-import { ProductPlaceholder } from "@/components/shared/product-placeholder";
-
+import { BrandImage } from "@/components/shared/brand-image";
 interface StoryReaderPageProps {
   params: Promise<{ slug: string; act: string }>;
 }
@@ -45,8 +44,13 @@ export default async function StoryReaderPage({ params }: StoryReaderPageProps) 
             The Piece of This Act
           </p>
           <Link href={`/shop/${featuredProduct.slug}`} className="group block">
-                      <div className="aspect-[3/4] w-full overflow-hidden rounded-sm">
-                        <ProductPlaceholder className="h-full w-full" />
+                      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
+                        <BrandImage
+                          src={featuredProduct.imageUrl}
+                          alt={featuredProduct.name}
+                          className="h-full w-full"
+                          sizes="(max-width: 768px) 90vw, 384px"
+                        />
                       </div>
             <p className="mt-4 font-condensed text-xl uppercase tracking-wide text-apeax-cod-gray">
               {featuredProduct.name}
