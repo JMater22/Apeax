@@ -9,6 +9,7 @@ export function Hero() {
         alt="APEAX latest lookbook"
         fill
         priority
+        sizes="100vw"
         className="object-cover"
       />
 

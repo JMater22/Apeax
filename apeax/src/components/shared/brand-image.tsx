@@ -7,16 +7,23 @@ interface BrandImageProps {
   alt: string;
   className?: string;
   placeholderVariant?: "dark" | "light";
+  sizes?: string;
 }
 
-export function BrandImage({ src, alt, className, placeholderVariant = "dark" }: BrandImageProps) {
+export function BrandImage({
+  src,
+  alt,
+  className,
+  placeholderVariant = "dark",
+  sizes = "(max-width: 768px) 50vw, 25vw",
+}: BrandImageProps) {
   if (!src) {
     return <ProductPlaceholder className={className} variant={placeholderVariant} />;
   }
 
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      <Image src={src} alt={alt} fill className="object-cover" />
+      <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
     </div>
   );
 }

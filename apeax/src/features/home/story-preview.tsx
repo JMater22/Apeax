@@ -72,6 +72,7 @@ export function StoryPreview() {
                 src="/images/mock-lookbook/Story-Preview.png"
                 alt="APEAX Our Story"
                 fill
+                sizes="(max-width: 768px) 90vw, 480px"
                 className="object-cover"
               />
             </div>
