@@ -14,14 +14,11 @@ Read the story before you shop. Every drop is a limited edition, tied to a narra
 
 ## Screenshots
 
-<!-- Add 3–4 screenshots or a short GIF walkthrough here.
-     Suggested shots: Home hero, Story Reader (an Act), Shop grid, Product Detail -->
 
-
-![alt text](apeax/public/images/readme-images/image.png)
-![alt text](apeax/public/images/readme-images/)
-![alt text](apeax/public/images/readme-images/)
-![alt text](apeax/public/images/readme-images/)
+![Home Hero](apeax/public/images/readme-images/image.png)
+![Story Reader (an Act)](apeax/public/images/readme-images/image/image-1.png)
+![Shop Grid](apeax/public/images/readme-images/image/image-2.png)
+![Product Detail](apeax/public/images/readme-images/image/image-3.png)
 ---
 
 ## The Concept
