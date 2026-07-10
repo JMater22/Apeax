@@ -16,9 +16,9 @@ Read the story before you shop. Every drop is a limited edition, tied to a narra
 
 
 ![Home Hero](apeax/public/images/readme-images/image.png)
-![Story Reader (an Act)](apeax/public/images/readme-images/image/image-1.png)
+![Story Reader (an Act)](apeax/public/images/readme-images/image-1.png)
 ![Shop Grid](apeax/public/images/readme-images/image/image-2.png)
-![Product Detail](apeax/public/images/readme-images/image/image-3.png)
+![Product Detail](apeax/public/images/readme-images/image-3.png)
 ---
 
 ## The Concept
