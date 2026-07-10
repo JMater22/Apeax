@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, User, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { PRIMARY_NAV_LINKS } from "@/lib/constants/navigation";
 import { useCart } from "@/hooks/use-cart";
 import { Container } from "@/components/layout/container";
+import { NavbarSearch } from "@/components/shared/navbar-search";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,10 +39,8 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <button aria-label="Search" className="hidden text-white/80 hover:text-white lg:block">
-            <Search size={18} />
-          </button>
-          <Link href="/account" aria-label="Account" className="hidden text-white/80 hover:text-white lg:block">
+          <NavbarSearch />
+          <Link href="/account" aria-label="Account" className="text-white/80 hover:text-white">
             <User size={18} />
           </Link>
           <Link href="/cart" className="font-sans text-sm font-medium uppercase tracking-wide text-white/80 hover:text-white">
@@ -58,19 +57,26 @@ export function Navbar() {
       </Container>
 
       {isMobileMenuOpen && (
-        <nav className="flex flex-col gap-4 border-t border-apeax-westar/20 bg-apeax-cod-gray px-6 py-6 lg:hidden">
-          {PRIMARY_NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-sans text-sm font-medium uppercase tracking-wide text-white"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-      )}
+              <nav className="flex flex-col gap-4 border-t border-apeax-westar/20 bg-apeax-cod-gray px-6 py-6 lg:hidden">
+                {PRIMARY_NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="font-sans text-sm font-medium uppercase tracking-wide text-white"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Link
+                  href="/account"
+                  className="font-sans text-sm font-medium uppercase tracking-wide text-white"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Account
+                </Link>
+              </nav>
+            )}
     </header>
   );
 }

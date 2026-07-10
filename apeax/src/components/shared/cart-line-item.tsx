@@ -1,9 +1,9 @@
 "use client";
 
 import { Minus, Plus, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/format-currency";
 import { useCart } from "@/hooks/use-cart";
+import { BrandImage } from "@/components/shared/brand-image";
 import { type CartItem } from "@/types/cart";
 
 export function CartLineItem({ item }: { item: CartItem }) {
@@ -11,9 +11,9 @@ export function CartLineItem({ item }: { item: CartItem }) {
 
   return (
     <div className="flex gap-4 border-b border-apeax-westar py-6">
-      <div
-        className={cn("h-24 w-20 shrink-0 rounded-sm", item.placeholderColor ?? "bg-apeax-cod-gray")}
-      />
+      <div className="relative h-24 w-20 shrink-0 overflow-hidden">
+        <BrandImage src={item.imageUrl} alt={item.name} className="h-full w-full" sizes="80px" />
+      </div>
 
       <div className="flex flex-1 flex-col justify-between">
         <div className="flex items-start justify-between">

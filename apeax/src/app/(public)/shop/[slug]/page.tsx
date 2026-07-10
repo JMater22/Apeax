@@ -77,7 +77,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   productSlug={product.slug}
                   productName={product.name}
                   price={product.price}
-                  placeholderColor={product.placeholderColor}
+                  imageUrl={product.imageUrl}
                   variants={product.variants}
                 />
               </div>

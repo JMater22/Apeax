@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group">
       <Link href={`/shop/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] w-full overflow-hidden">
+        <div className="relative aspect-3/4 w-full overflow-hidden">
           <BrandImage
             src={product.imageUrl}
             alt={product.name}
@@ -38,8 +38,8 @@ export function ProductCard({ product }: { product: Product }) {
             }}
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
             aria-pressed={wishlisted}
-            className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-apeax-cod-gray opacity-0 transition-opacity duration-200 hover:bg-white group-hover:opacity-100 aria-pressed:opacity-100"
-          >
+            className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-apeax-cod-gray opacity-100 transition-opacity duration-200 hover:bg-white md:opacity-0 md:group-hover:opacity-100 aria-pressed:opacity-100"
+            >
             <Heart size={16} className={cn(wishlisted && "fill-apeax-cod-gray")} />
           </button>
         </div>

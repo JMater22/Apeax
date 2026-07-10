@@ -10,13 +10,18 @@ Read the story before you shop. Every drop is a limited edition, tied to a narra
 
 ## Live Demo
 
-🔗 [Add your Vercel link here once deployed]
+🔗 [apeax.vercel-tan.app](https://apeax-tan.vercel.app/)
 
 ## Screenshots
 
-<!-- Add 3–4 screenshots or a short GIF walkthrough here once deployed.
+<!-- Add 3–4 screenshots or a short GIF walkthrough here.
      Suggested shots: Home hero, Story Reader (an Act), Shop grid, Product Detail -->
 
+
+![alt text](apeax/public/images/readme-images/image.png)
+![alt text](apeax/public/images/readme-images/)
+![alt text](apeax/public/images/readme-images/)
+![alt text](apeax/public/images/readme-images/)
 ---
 
 ## The Concept
@@ -46,6 +51,7 @@ Planned for backend integration: **Supabase** (Postgres, Auth, Storage, Row Leve
 - 🛍️ **Shop** — search, category filters, sorting, pagination
 - 🧥 **Product Detail** — image gallery, size/variant selection, live stock display, fabric/care details, related products, reviews
 - 🛒 **Cart & Checkout** — full cart state (add/remove/update quantity), shipping form, shipping method selection, payment method UI, order confirmation
+- ❤️ **Wishlist** — save products from anywhere in the shop, view/manage from your account
 - 👤 **Account** — login/register/password reset flows, profile editing, order history, saved addresses, wishlist
 - ℹ️ **Company Pages** — About (mission/vision), Contact (working form), FAQ (searchable, categorized accordion)
 - ✅ **Authenticity Verify** — public page shell for scanning/verifying a product's edition and ownership
@@ -60,13 +66,20 @@ src/
     ui/             → shadcn primitives (Button, Input, Card, etc.)
     shared/         → reusable composed components (ProductCard, SearchBar, etc.)
   features/         → page-specific component groups (e.g. features/home/)
-  hooks/            → reusable React logic (useCart, etc.)
+  hooks/            → reusable React logic (useCart, useWishlist, etc.)
   lib/              → shared config, utils, mock data
   types/            → TypeScript interfaces
   constants/        → static data (nav links, categories, etc.)
 ```
 
 Built following: Server Components by default (Client Components only where interactivity requires it), single-responsibility components, no premature abstraction.
+
+## Quality
+
+- Lighthouse: 96–100 across Performance, Accessibility, Best Practices, and SEO (desktop and mobile)
+- Fully responsive, tested down to mobile widths
+- Branded 404 and global error boundary
+- `sitemap.xml` / `robots.txt` for SEO
 
 ## Getting Started
 
@@ -85,7 +98,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - [ ] Build out the Admin Dashboard (product/inventory/order management)
 - [ ] Implement the QR-based authenticity/ownership transfer system
 - [ ] Payment gateway integration
-- [ ] Full accessibility and Lighthouse performance pass
+- [ ] Automated test coverage
 
 ## Notes on Current Limitations
 
@@ -95,4 +108,4 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-Built by Jonathan C. Melu — [portfolio link] · [LinkedIn] · [GitHub]
+Built by **Jonathan Melu**
