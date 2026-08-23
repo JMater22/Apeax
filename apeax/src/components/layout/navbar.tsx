@@ -8,7 +8,7 @@ import { PRIMARY_NAV_LINKS } from "@/lib/constants/navigation";
 import { useCart } from "@/hooks/use-cart";
 import { Container } from "@/components/layout/container";
 import { NavbarSearch } from "@/components/shared/navbar-search";
-
+import { motion, AnimatePresence } from "motion/react";
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { itemCount } = useCart();
@@ -56,27 +56,37 @@ export function Navbar() {
         </div>
       </Container>
 
-      {isMobileMenuOpen && (
-              <nav className="flex flex-col gap-4 border-t border-apeax-westar/20 bg-apeax-cod-gray px-6 py-6 lg:hidden">
-                {PRIMARY_NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="font-sans text-sm font-medium uppercase tracking-wide text-white"
-                    onClick={() => setIsMobileMenuOpen(false)}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                  <motion.nav
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden border-t border-apeax-westar/20 bg-apeax-cod-gray lg:hidden"
                   >
-                    {link.label}
-                  </Link>
-                ))}
-                <Link
-                  href="/account"
-                  className="font-sans text-sm font-medium uppercase tracking-wide text-white"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Account
-                </Link>
-              </nav>
-            )}
+                    <div className="flex flex-col gap-4 px-6 py-6">
+                      {PRIMARY_NAV_LINKS.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className="font-sans text-sm font-medium uppercase tracking-wide text-white"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                      <Link
+                        href="/account"
+                        className="font-sans text-sm font-medium uppercase tracking-wide text-white"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Account
+                      </Link>
+                    </div>
+                  </motion.nav>
+                )}
+              </AnimatePresence>
     </header>
   );
 }

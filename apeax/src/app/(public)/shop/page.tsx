@@ -9,12 +9,17 @@ import { PRODUCT_CATEGORIES } from "@/lib/constants/categories";
 import { type SortOption } from "@/lib/constants/sort-options";
 import { type ProductCategory } from "@/types/product";
 import { ALL_PRODUCTS } from "@/lib/data/products";
-
+import type { Metadata } from "next";
+import { RevealGroup, RevealItem } from "@/components/shared/reveal";
 const PAGE_SIZE = 8;
 
 interface ShopPageProps {
   searchParams: Promise<{ category?: string; q?: string; sort?: string; page?: string }>;
 }
+export const metadata: Metadata = {
+  title: "Shop | APEAX",
+  description: "Shop limited-edition APEAX merchandise — tees, hoodies, caps, and accessories from every chapter.",
+};
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const { category, q, sort, page } = await searchParams;
@@ -93,11 +98,13 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           <p className="font-body text-apeax-cod-gray/60">No products found.</p>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-              {paginatedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+          <RevealGroup className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            {paginatedProducts.map((product) => (
+              <RevealItem key={product.id}>
+                <ProductCard product={product} />
+              </RevealItem>
+            ))}
+          </RevealGroup>
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

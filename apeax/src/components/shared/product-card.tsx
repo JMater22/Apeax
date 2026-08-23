@@ -8,11 +8,14 @@ import { BrandImage } from "@/components/shared/brand-image";
 import { useWishlist } from "@/hooks/use-wishlist";
 import { formatCurrency } from "@/lib/format-currency";
 import { type Product } from "@/types/product";
+import { motion, useReducedMotion } from "motion/react";
+
+
 
 export function ProductCard({ product }: { product: Product }) {
   const { isWishlisted, toggleWishlist } = useWishlist();
   const wishlisted = isWishlisted(product.slug);
-
+  const shouldReduceMotion = useReducedMotion();
   return (
     <div className="group">
       <Link href={`/shop/${product.slug}`} className="block">
@@ -31,7 +34,8 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           )}
 
-          <button
+          <motion.button
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.85 }}
             onClick={(e) => {
               e.preventDefault();
               toggleWishlist(product.slug);
@@ -41,7 +45,7 @@ export function ProductCard({ product }: { product: Product }) {
             className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-apeax-cod-gray opacity-100 transition-opacity duration-200 hover:bg-white md:opacity-0 md:group-hover:opacity-100 aria-pressed:opacity-100"
             >
             <Heart size={16} className={cn(wishlisted && "fill-apeax-cod-gray")} />
-          </button>
+          </motion.button>
         </div>
 
         <div className="mt-3 flex items-center justify-between">
