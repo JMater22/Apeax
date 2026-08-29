@@ -46,7 +46,7 @@ if (products.length === 0) notFound();
                 will not be restocked.
             </p>
             
-            <a  href={`/chapters/${slug}/story/act-1`}
+            <a  href={`/chapters/${slug}/story`}
                 className="shrink-0 whitespace-nowrap bg-apeax-cod-gray px-6 py-3 font-sans text-xs font-bold uppercase tracking-wide text-white hover:opacity-90"
             >
                 Read the Story

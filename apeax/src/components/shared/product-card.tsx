@@ -29,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
           {product.isSoldOut && (
             <div className="absolute left-2 top-2">
               <Badge variant="destructive" className="font-sans text-[10px] uppercase tracking-wide">
-                Sold Out
+                Fully Claimed
               </Badge>
             </div>
           )}
@@ -54,9 +54,25 @@ export function ProductCard({ product }: { product: Product }) {
               {product.name}
             </span>
             {product.editionSize && (
-              <span className="font-sans text-xs text-apeax-cod-gray/70">
-                {product.unitsSold ?? 0} / {product.editionSize} claimed
-              </span>
+              <div className="mt-1">
+                <div className="h-1 w-16 overflow-hidden bg-apeax-westar">
+                  <div
+                    className="h-full bg-apeax-cod-gray"
+                    style={{ width: `${((product.unitsSold ?? 0) / product.editionSize) * 100}%` }}
+                  />
+                </div>
+                <span
+                  className={cn(
+                    "mt-1 block font-sans text-xs",
+                    product.editionSize - (product.unitsSold ?? 0) <= 10 &&
+                      product.editionSize - (product.unitsSold ?? 0) > 0
+                      ? "font-bold text-apeax-cod-gray"
+                      : "text-apeax-cod-gray/70",
+                  )}
+                >
+                  {product.unitsSold ?? 0} / {product.editionSize} claimed
+                </span>
+              </div>
             )}
           </div>
           <span className="font-condensed text-base text-apeax-cod-gray/80">

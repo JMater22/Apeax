@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { BrandImage } from "@/components/shared/brand-image";
 import { useCart } from "@/hooks/use-cart";
+import { formatCurrency } from "@/lib/format-currency";
 import { type ProductVariant } from "@/types/product";
 
 interface VariantSelectorProps {
   productSlug: string;
   productName: string;
   price: number;
-  placeholderColor?: string;
   imageUrl?: string;
   variants: ProductVariant[];
 }
@@ -29,10 +30,23 @@ export function VariantSelector({
   );
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const triggerRef = useRef<HTMLDivElement>(null);
 
   const selectedVariant = variants.find((v) => v.id === selectedId);
   const isAvailable = selectedVariant && selectedVariant.stock > 0;
   const maxQuantity = selectedVariant ? Math.min(selectedVariant.stock, 10) : 1;
+
+  useEffect(() => {
+    const el = triggerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { threshold: 0 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   function handleSelectVariant(variantId: string) {
     setSelectedId(variantId);
@@ -56,6 +70,12 @@ export function VariantSelector({
     setQuantity(1);
     setTimeout(() => setJustAdded(false), 2000);
   }
+
+  const ctaLabel = !isAvailable
+    ? "Sold Out"
+    : justAdded
+      ? "Claimed ✓"
+      : `Claim This Piece (${quantity})`;
 
   return (
     <div>
@@ -86,7 +106,7 @@ export function VariantSelector({
           ? selectedVariant.stock <= 10
             ? `Only ${selectedVariant.stock} left in this size`
             : "In stock"
-          : "Out of stock in this size"}
+          : "This size has been fully claimed"}
       </p>
 
       {isAvailable && (
@@ -120,14 +140,40 @@ export function VariantSelector({
         </div>
       )}
 
-      <Button
-        variant="default"
-        className="mt-4 h-11 w-full font-sans text-xs uppercase tracking-wide"
-        disabled={!isAvailable}
-        onClick={handleAddToCart}
-      >
-        {!isAvailable ? "Notify Me" : justAdded ? "Added ✓" : `Add to Cart (${quantity})`}
-      </Button>
+      <div ref={triggerRef}>
+        <Button
+          variant="default"
+          className="mt-4 h-11 w-full font-sans text-xs uppercase tracking-wide"
+          disabled={!isAvailable}
+          onClick={handleAddToCart}
+        >
+          {ctaLabel}
+        </Button>
+      </div>
+
+      {showStickyBar && (
+        <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 border-t border-apeax-westar bg-white px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] md:hidden">
+          <div className="relative h-12 w-10 shrink-0 overflow-hidden rounded-sm">
+            <BrandImage src={imageUrl} alt={productName} className="h-full w-full" sizes="40px" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-sans text-xs font-medium text-apeax-cod-gray">
+              {productName}
+            </p>
+            <p className="font-condensed text-sm text-apeax-cod-gray/70">
+              {formatCurrency(price)}
+            </p>
+          </div>
+          <Button
+            variant="default"
+            className="h-9 shrink-0 px-4 font-sans text-[11px] uppercase tracking-wide"
+            disabled={!isAvailable}
+            onClick={handleAddToCart}
+          >
+            {!isAvailable ? "Sold Out" : justAdded ? "Claimed ✓" : "Claim"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

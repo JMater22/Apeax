@@ -16,7 +16,7 @@ import {
   type ShippingMethod,
   type PaymentMethod,
 } from "@/types/checkout";
-
+import { getProductBySlug } from "@/lib/data/products";
 const EMPTY_ADDRESS: ShippingAddress = {
   fullName: "",
   addressLine1: "",
@@ -40,6 +40,24 @@ export default function CheckoutPage() {
 
   function handlePlaceOrder() {
     // TODO: replace with a real order.service.ts POST once backend exists (Sprint 7)
+    const orderSnapshot = {
+      items: items.map((item) => {
+        const product = getProductBySlug(item.productSlug);
+        const editionSize = product?.editionSize ?? 0;
+        const editionNumber =
+          editionSize > 0 ? Math.floor(Math.random() * editionSize) + 1 : null;
+        return {
+          name: item.name,
+          variantLabel: item.variantLabel,
+          quantity: item.quantity,
+          price: item.price,
+          editionNumber,
+          editionSize,
+        };
+      }),
+      total,
+    };
+    sessionStorage.setItem("apeax_last_order", JSON.stringify(orderSnapshot));
     clearCart();
     router.push("/checkout/confirmation");
   }

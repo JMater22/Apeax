@@ -11,6 +11,7 @@ import { getProductBySlug, getRelatedProducts } from "@/lib/data/products";
 import { getReviewsForProduct, getAverageRating } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/format-currency";
 import type { Metadata } from "next";
+import { EditionCounter } from "@/components/shared/edition-counter";
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -54,9 +55,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </p>
 
             {product.editionSize && (
-              <p className="mt-2 font-sans text-xs uppercase tracking-wide text-apeax-cod-gray/60">
-                Limited Edition — {product.unitsSold ?? 0} / {product.editionSize} claimed
-              </p>
+              <EditionCounter claimed={product.unitsSold ?? 0} total={product.editionSize} />
             )}
 
             {product.narrativeHook && product.chapterId && (

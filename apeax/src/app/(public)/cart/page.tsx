@@ -17,7 +17,7 @@ export default function CartPage() {
       <Container className="py-16">
         {items.length === 0 ? (
           <div className="flex flex-col items-center gap-4 py-16 text-center">
-            <p className="font-body text-apeax-cod-gray/60">Your cart is empty.</p>
+            <p className="font-body text-apeax-cod-gray/60">Nothing claimed yet. The story is waiting.</p>
             <Link href="/shop">
               <Button variant="default" className="font-sans text-xs uppercase tracking-wide">
                 Continue Shopping

@@ -29,7 +29,7 @@ export default function NewInPage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
-                href={`/chapters/${latestChapter.slug}/story/act-1`}
+                href={`/chapters/${latestChapter.slug}/story`}
                 className="bg-apeax-cod-gray px-8 py-4 font-sans text-xs font-bold uppercase tracking-wide text-white hover:opacity-90"
               >
                 Read the Story
