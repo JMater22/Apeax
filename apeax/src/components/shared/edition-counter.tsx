@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView, useReducedMotion } from "motion/react";
-import { cn } from "@/lib/utils";
 
 interface EditionCounterProps {
   claimed: number;
@@ -14,7 +13,7 @@ export function EditionCounter({ claimed, total }: EditionCounterProps) {
   const isInView = useInView(ref, { once: true, margin: "-40px" });
   const shouldReduceMotion = useReducedMotion();
   const [display, setDisplay] = useState(shouldReduceMotion ? claimed : 0);
-  const [barWidth, setBarWidth] = useState(shouldReduceMotion ? (claimed / total) * 100 : 0);
+  const percentClaimed = total > 0 ? (claimed / total) * 100 : 0;
 
   useEffect(() => {
     if (!isInView || shouldReduceMotion) return;
@@ -23,15 +22,10 @@ export function EditionCounter({ claimed, total }: EditionCounterProps) {
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => setDisplay(Math.round(v)),
     });
-    const timeout = setTimeout(() => setBarWidth((claimed / total) * 100), 50);
-    return () => {
-      controls.stop();
-      clearTimeout(timeout);
-    };
-  }, [isInView, claimed, total, shouldReduceMotion]);
+    return () => controls.stop();
+  }, [isInView, claimed, shouldReduceMotion]);
 
   const remaining = total - claimed;
-  const percentClaimed = (claimed / total) * 100;
   const isAlmostGone = remaining > 0 && remaining <= 10;
   const isSellingFast = !isAlmostGone && remaining > 0 && remaining <= total * 0.3;
 
@@ -51,10 +45,10 @@ export function EditionCounter({ claimed, total }: EditionCounterProps) {
       <div className="mt-3 h-1.5 w-full overflow-hidden bg-apeax-westar">
         <motion.div
           className="h-full bg-apeax-cod-gray"
-          initial={false}
-          animate={{ width: `${barWidth}%` }}
-          transition={{ duration: shouldReduceMotion ? 0 : 1, ease: [0.22, 1, 0.36, 1] }}
-          style={{ width: shouldReduceMotion ? `${percentClaimed}%` : undefined }}
+          initial={{ width: shouldReduceMotion ? `${percentClaimed}%` : "0%" }}
+          whileInView={{ width: `${percentClaimed}%` }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: shouldReduceMotion ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
         />
       </div>
 
@@ -71,7 +65,7 @@ export function EditionCounter({ claimed, total }: EditionCounterProps) {
           Selling Fast — {remaining} Remaining
         </p>
       ) : (
-        <p className={cn("mt-3 font-sans text-xs text-apeax-cod-gray/60")}>
+        <p className="mt-3 font-sans text-xs text-apeax-cod-gray/60">
           {remaining} pieces remaining
         </p>
       )}
