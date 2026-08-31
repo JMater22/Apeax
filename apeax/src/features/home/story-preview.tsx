@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { BrandAsterisk } from "@/components/shared/brand-asterisk";
 import { Reveal } from "@/components/shared/reveal";
-
+import { Magnetic } from "@/components/shared/magnetic";
 export function StoryPreview() {
   return (
     <section className="relative overflow-hidden border-t-2 border-apeax-westar bg-background">
@@ -59,12 +59,14 @@ export function StoryPreview() {
               Every collection is a chapter. Every chapter, an act of
               becoming. Step into the story before you wear it.
             </p>
-            <Link
-              href="/chapters/chapter-one-exceed-limits/story"
-              className="relative mt-8 inline-block bg-apeax-cod-gray px-8 py-4 font-sans text-xs font-bold uppercase tracking-[1.8px] text-white hover:opacity-90"
-            >
-              Read Our Story
-            </Link>
+            <Magnetic className="mt-8 inline-block w-fit">
+              <Link
+                href="/chapters/chapter-one-exceed-limits/story"
+                className="relative block bg-apeax-cod-gray px-8 py-4 font-sans text-xs font-bold uppercase tracking-[1.8px] text-white hover:opacity-90"
+              >
+                Read Our Story
+              </Link>
+            </Magnetic>
           </div>
           <div className="relative order-1 aspect-[218/365] w-full max-w-[300px] justify-self-center md:order-2 md:-mt-10 md:justify-self-end">
             <span className="pointer-events-none absolute -right-4 -top-10 select-none font-display text-[140px] leading-none text-apeax-westar/60 md:-right-8 md:-top-16 md:text-[220px]">

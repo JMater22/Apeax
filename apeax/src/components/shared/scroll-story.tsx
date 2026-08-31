@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { BrandImage } from "@/components/shared/brand-image";
 import { ProductCard } from "@/components/shared/product-card";
@@ -13,6 +14,29 @@ import { type StoryChapter } from "@/types/story";
 interface ScrollStoryProps {
   story: StoryChapter;
   chapterSlug: string;
+}
+
+function ActVisual({ imageUrl, alt }: { imageUrl?: string; alt: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [30, -30]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative mx-auto aspect-[3/4] w-full max-w-[280px] overflow-hidden rounded-sm shadow-lg"
+    >
+      <motion.div style={{ y }} className="absolute inset-0">
+        <BrandImage
+          src={imageUrl}
+          alt={alt}
+          className="h-full w-full"
+          sizes="(max-width: 768px) 60vw, 280px"
+        />
+      </motion.div>
+    </div>
+  );
 }
 
 export function ScrollStory({ story, chapterSlug }: ScrollStoryProps) {
@@ -83,14 +107,7 @@ export function ScrollStory({ story, chapterSlug }: ScrollStoryProps) {
           >
             <div className="mx-auto grid w-full max-w-4xl grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
               <Reveal className={cn(!isEven && "md:order-2")}>
-                <div className="relative mx-auto aspect-[3/4] w-full max-w-[280px] overflow-hidden rounded-sm shadow-lg">
-                  <BrandImage
-                    src={product?.imageUrl}
-                    alt={product?.name ?? ""}
-                    className="h-full w-full"
-                    sizes="(max-width: 768px) 60vw, 280px"
-                  />
-                </div>
+                <ActVisual imageUrl={product?.imageUrl} alt={product?.name ?? ""} />
               </Reveal>
 
               <Reveal delay={0.1} className={cn(!isEven && "md:order-1")}>

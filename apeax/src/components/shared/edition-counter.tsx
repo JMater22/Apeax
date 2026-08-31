@@ -58,11 +58,11 @@ export function EditionCounter({ claimed, total }: EditionCounterProps) {
         </p>
       ) : isAlmostGone ? (
         <p className="mt-3 inline-block bg-apeax-cod-gray px-2.5 py-1 font-sans text-xs font-bold uppercase tracking-wide text-white">
-          Only {remaining} Left — Almost Gone
+          Don&apos;t Miss This — Only {remaining} Left
         </p>
       ) : isSellingFast ? (
         <p className="mt-3 font-sans text-xs font-bold uppercase tracking-wide text-apeax-cod-gray">
-          Selling Fast — {remaining} Remaining
+          Going Fast — Don&apos;t Miss Out
         </p>
       ) : (
         <p className="mt-3 font-sans text-xs text-apeax-cod-gray/60">

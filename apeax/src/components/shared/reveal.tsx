@@ -9,7 +9,6 @@ interface RevealProps {
   className?: string;
 }
 
-/** Fade + slight upward reveal, triggers once when scrolled into view. */
 export function Reveal({ children, delay = 0, className }: RevealProps) {
   const shouldReduceMotion = useReducedMotion();
   const variants: Variants = {
@@ -22,7 +21,7 @@ export function Reveal({ children, delay = 0, className }: RevealProps) {
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, amount: 0 }}
       variants={variants}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -36,14 +35,13 @@ const containerVariants: Variants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
-/** Wrap a grid with this, then wrap each grid item with RevealItem for a staggered reveal. */
 export function RevealGroup({ children, className }: RevealProps) {
   return (
     <motion.div
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, amount: 0 }}
       variants={containerVariants}
     >
       {children}

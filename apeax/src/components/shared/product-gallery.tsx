@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { BrandImage } from "@/components/shared/brand-image";
 
@@ -24,13 +25,24 @@ export function ProductGallery({ productName, imageUrl }: ProductGalleryProps) {
 
   return (
     <div>
-      <div className="relative aspect-[4/5] w-full">
-        <BrandImage
-          src={views[activeView].src}
-          alt={`${productName} — ${views[activeView].label} view`}
-          className="h-full w-full"
-          sizes="(max-width: 768px) 90vw, 45vw"
-        />
+      <div className="relative aspect-[4/5] w-full overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeView}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute inset-0"
+          >
+            <BrandImage
+              src={views[activeView].src}
+              alt={`${productName} — ${views[activeView].label} view`}
+              className="h-full w-full"
+              sizes="(max-width: 768px) 90vw, 45vw"
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
       <div className="mt-3 grid grid-cols-4 gap-2">
         {views.map((view, index) => (

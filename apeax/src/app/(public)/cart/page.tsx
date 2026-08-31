@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CartLineItem } from "@/components/shared/cart-line-item";
 import { CartSummary } from "@/components/shared/cart-summary";
 import { useCart } from "@/hooks/use-cart";
-
+import { ShippingDeadlineBanner } from "@/components/shared/shipping-deadline-banner";
 export default function CartPage() {
   const { items, subtotal } = useCart();
 
@@ -25,14 +25,17 @@ export default function CartPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-            <div className="md:col-span-2">
-              {items.map((item) => (
-                <CartLineItem key={item.id} item={item} />
-              ))}
-            </div>
-            <div>
-              <CartSummary subtotal={subtotal} />
+          <div className="flex flex-col gap-6">
+            <ShippingDeadlineBanner />
+            <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+              <div className="md:col-span-2">
+                {items.map((item) => (
+                  <CartLineItem key={item.id} item={item} />
+                ))}
+              </div>
+              <div>
+                <CartSummary subtotal={subtotal} />
+              </div>
             </div>
           </div>
         )}

@@ -104,7 +104,7 @@ export function VariantSelector({
       <p className="mt-3 font-sans text-xs text-apeax-cod-gray/70">
         {isAvailable
           ? selectedVariant.stock <= 10
-            ? `Only ${selectedVariant.stock} left in this size`
+            ? `Don't miss it — only ${selectedVariant.stock} left in this size`
             : "In stock"
           : "This size has been fully claimed"}
       </p>

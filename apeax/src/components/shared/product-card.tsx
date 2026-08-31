@@ -2,24 +2,28 @@
 
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { BrandImage } from "@/components/shared/brand-image";
 import { useWishlist } from "@/hooks/use-wishlist";
 import { formatCurrency } from "@/lib/format-currency";
 import { type Product } from "@/types/product";
-import { motion, useReducedMotion } from "motion/react";
-
-
 
 export function ProductCard({ product }: { product: Product }) {
   const { isWishlisted, toggleWishlist } = useWishlist();
   const wishlisted = isWishlisted(product.slug);
   const shouldReduceMotion = useReducedMotion();
+
   return (
-    <div className="group">
+    <motion.div
+      className="group"
+      whileHover={shouldReduceMotion ? undefined : { y: -6, boxShadow: "0 16px 28px rgba(10,10,10,0.14)" }}
+      whileTap={shouldReduceMotion ? undefined : { y: -2, boxShadow: "0 8px 16px rgba(10,10,10,0.10)" }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+    >
       <Link href={`/shop/${product.slug}`} className="block">
-        <div className="relative aspect-3/4 w-full overflow-hidden">
+        <div className="relative aspect-[3/4] w-full overflow-hidden">
           <BrandImage
             src={product.imageUrl}
             alt={product.name}
@@ -43,7 +47,7 @@ export function ProductCard({ product }: { product: Product }) {
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
             aria-pressed={wishlisted}
             className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-apeax-cod-gray opacity-100 transition-opacity duration-200 hover:bg-white md:opacity-0 md:group-hover:opacity-100 aria-pressed:opacity-100"
-            >
+          >
             <Heart size={16} className={cn(wishlisted && "fill-apeax-cod-gray")} />
           </motion.button>
         </div>
@@ -80,6 +84,6 @@ export function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 }

@@ -10,7 +10,7 @@ import { type SortOption } from "@/lib/constants/sort-options";
 import { type ProductCategory } from "@/types/product";
 import { ALL_PRODUCTS } from "@/lib/data/products";
 import type { Metadata } from "next";
-import { RevealGroup, RevealItem } from "@/components/shared/reveal";
+
 const PAGE_SIZE = 8;
 
 interface ShopPageProps {
@@ -98,13 +98,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           <p className="font-body text-apeax-cod-gray/60">No products found.</p>
         ) : (
           <>
-          <RevealGroup className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            {paginatedProducts.map((product) => (
-              <RevealItem key={product.id}>
-                <ProductCard product={product} />
-              </RevealItem>
-            ))}
-          </RevealGroup>
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          {paginatedProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
