@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/shared/page-header";
 import { Container } from "@/components/layout/container";
@@ -6,12 +7,17 @@ import { ProductGallery } from "@/components/shared/product-gallery";
 import { VariantSelector } from "@/components/shared/variant-selector";
 import { ProductDetailsSection } from "@/components/shared/product-details-section";
 import { ProductCard } from "@/components/shared/product-card";
+import { EditionCounter } from "@/components/shared/edition-counter";
 import { ReviewsSection } from "@/components/shared/reviews-section";
 import { getProductBySlug, getRelatedProducts } from "@/lib/data/products";
 import { getReviewsForProduct, getAverageRating } from "@/lib/data/reviews";
+import { getChapterById } from "@/lib/data/chapters";
+import { STORY_CHAPTERS } from "@/lib/data/story-chapters";
 import { formatCurrency } from "@/lib/format-currency";
-import type { Metadata } from "next";
-import { EditionCounter } from "@/components/shared/edition-counter";
+
+interface ProductDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -19,14 +25,8 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
   if (!product) return { title: "Product Not Found | APEAX" };
   return {
     title: `${product.name} | APEAX`,
-    description: product.narrativeHook ?? `Shop the ${product.name} — part of the APEAX limited edition collection.`,
+    description: product.story,
   };
-}
-
-
-
-interface ProductDetailPageProps {
-  params: Promise<{ slug: string }>;
 }
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
@@ -38,6 +38,9 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   const relatedProducts = getRelatedProducts(product);
   const reviews = getReviewsForProduct(slug);
   const averageRating = getAverageRating(reviews);
+
+  const chapter = product.chapterId ? getChapterById(product.chapterId) : undefined;
+  const hasFullStory = chapter ? Boolean(STORY_CHAPTERS[chapter.slug]) : false;
 
   return (
     <>
@@ -58,17 +61,22 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <EditionCounter claimed={product.unitsSold ?? 0} total={product.editionSize} />
             )}
 
-            {product.narrativeHook && product.chapterId && (
-              <p className="mt-4 font-body text-sm italic leading-relaxed text-apeax-cod-gray/70">
-                {product.narrativeHook}{" "}
-                <Link
-                  href={`/chapters/chapter-one-exceed-limits`}
-                  className="not-italic underline underline-offset-2 hover:text-apeax-cod-gray"
-                >
-                  Read the story
-                </Link>
+            <div className="mt-6 border-l-2 border-apeax-westar pl-4">
+              <p className="font-sans text-[10px] uppercase tracking-[2px] text-apeax-cod-gray/40">
+                The Story
               </p>
-            )}
+              <p className="mt-2 font-body text-sm italic leading-relaxed text-apeax-cod-gray/80">
+                {product.story}
+              </p>
+              {chapter && hasFullStory && (
+                <Link
+                  href={`/chapters/${chapter.slug}/story`}
+                  className="mt-3 inline-block font-sans text-xs font-medium uppercase tracking-wide text-apeax-cod-gray underline underline-offset-4 hover:opacity-70"
+                >
+                  Read the Full Chapter Story
+                </Link>
+              )}
+            </div>
 
             {product.variants && product.variants.length > 0 && (
               <div className="mt-8">

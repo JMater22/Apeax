@@ -7,9 +7,9 @@ export interface ProductVariant {
 }
 
 export interface ProductDetails {
-  material: string;        // "100% Heavyweight Cotton"
-  fit: string;              // "Oversized Fit"
-  care: string[];           // ["Machine wash cold", "Do not bleach", ...]
+  material: string;
+  fit: string;
+  care: string[];
 }
 
 export interface Product {
@@ -26,5 +26,6 @@ export interface Product {
   isSoldOut?: boolean;
   variants?: ProductVariant[];
   details?: ProductDetails;
-  narrativeHook?: string;   // short 1-2 sentence story tie-in, NOT the full Act
+  /** Every product's own narrative passage — required so no product is ever left without a story. */
+  story: string;
 }

@@ -1,10 +1,18 @@
 import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/shared/page-header";
+import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/shared/product-card";
+import { ChapterCard } from "@/components/shared/chapter-card";
+import { ChapterHero } from "@/components/shared/chapter-hero";
+import { ChapterScarcityBlock } from "@/components/shared/chapter-scarcity-block";
+import { Reveal, RevealGroup, RevealItem } from "@/components/shared/reveal";
+import { getChapterBySlug, CHAPTERS } from "@/lib/data/chapters";
 import { getProductsByChapter } from "@/lib/data/products";
-import type { Metadata } from "next";
-import { getChapterBySlug } from "@/lib/data/chapters";
+import { STORY_CHAPTERS } from "@/lib/data/story-chapters";
+
+interface ChapterDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
 
 export async function generateMetadata({ params }: ChapterDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -16,49 +24,70 @@ export async function generateMetadata({ params }: ChapterDetailPageProps): Prom
   };
 }
 
-
-
-interface ChapterDetailPageProps {
-  params: Promise<{ slug: string }>;
-}
-
 export default async function ChapterDetailPage({ params }: ChapterDetailPageProps) {
   const { slug } = await params;
-    // Chapter One's chapterId is "1" — matches the slug for now since there's
-    // only one chapter with products. Once a real Chapter/Product relationship
-    // exists in Sprint 7, this should look up chapterId from the Chapter record
-    // by slug instead of hardcoding it here.
-const products = slug === "chapter-one-exceed-limits" ? getProductsByChapter("1") : [];
+  const chapter = getChapterBySlug(slug);
 
-if (products.length === 0) notFound();
+  if (!chapter) notFound();
 
-  if (!products) notFound();
+  const products = getProductsByChapter(chapter.id);
+  const hasStory = Boolean(STORY_CHAPTERS[chapter.slug]);
+  const claimed = products.reduce((sum, p) => sum + (p.unitsSold ?? 0), 0);
+  const total = products.reduce((sum, p) => sum + (p.editionSize ?? 0), 0);
+  const otherChapters = CHAPTERS.filter((c) => c.id !== chapter.id);
 
-    return (
-        <>
-        <PageHeader title="Chapter One: Exceed Limits" />
+  return (
+    <>
+      <ChapterHero chapter={chapter} hasStory={hasStory} />
 
-        <Container className="py-16">
-            <div className="mb-10 flex items-center justify-between">
-            <p className="max-w-2xl font-body text-apeax-cod-gray/70">
-                The first act of becoming — where growth begins with breaking your
-                own ceiling. Each piece is limited to its stated edition size and
-                will not be restocked.
+      <Container className="py-16 md:py-24">
+        {products.length > 0 ? (
+          <>
+            <Reveal className="mb-12 md:mb-16">
+              <ChapterScarcityBlock claimed={claimed} total={total} chapterSlug={chapter.slug} />
+            </Reveal>
+
+            <Reveal>
+              <h2 className="mb-8 font-condensed text-xl uppercase tracking-wide text-apeax-cod-gray md:text-2xl">
+                Shop This Chapter — {products.length} Pieces
+              </h2>
+            </Reveal>
+
+            <RevealGroup className="grid grid-cols-2 gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4">
+              {products.map((product) => (
+                <RevealItem key={product.id}>
+                  <ProductCard product={product} />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </>
+        ) : (
+          <Reveal className="mx-auto max-w-md text-center">
+            <p className="font-display text-3xl uppercase text-apeax-cod-gray">Coming Soon</p>
+            <p className="mt-4 font-body text-sm leading-relaxed text-apeax-cod-gray/70">
+              This chapter hasn&apos;t dropped yet. Check back soon, or explore
+              what&apos;s already live below.
             </p>
-            
-            <a  href={`/chapters/${slug}/story`}
-                className="shrink-0 whitespace-nowrap bg-apeax-cod-gray px-6 py-3 font-sans text-xs font-bold uppercase tracking-wide text-white hover:opacity-90"
-            >
-                Read the Story
-            </a>
-            </div>
+          </Reveal>
+        )}
 
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))}
-            </div>
-        </Container>
-        </>
-    );
+        {otherChapters.length > 0 && (
+          <div className="mt-24 border-t border-apeax-westar pt-16 md:mt-32">
+            <Reveal>
+              <h2 className="mb-8 text-center font-condensed text-xl uppercase tracking-wide text-apeax-cod-gray md:text-2xl">
+                Continue the Story
+              </h2>
+            </Reveal>
+            <RevealGroup className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {otherChapters.map((c) => (
+                <RevealItem key={c.id}>
+                  <ChapterCard chapter={c} />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+        )}
+      </Container>
+    </>
+  );
 }
