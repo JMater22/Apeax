@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import { ScarcityTicker } from "@/components/shared/scarcity-ticker";
 import { Container } from "@/components/layout/container";
 import {
   FOOTER_TOP_LINKS,
@@ -10,6 +10,7 @@ import {
 export function Footer() {
   return (
     <footer className="border-t border-border bg-foreground text-background">
+       <ScarcityTicker />
       <Container className="py-10">
         <div className="flex flex-col gap-4 border-b border-background/20 pb-6 md:flex-row md:items-center md:justify-between">
           <nav className="flex gap-3 text-xs uppercase tracking-wide">

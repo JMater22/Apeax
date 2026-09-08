@@ -29,6 +29,10 @@ export function getChapterBySlug(slug: string): Chapter | undefined {
   return CHAPTERS.find((c) => c.slug === slug);
 }
 
+export function getChapterById(id: string): Chapter | undefined {
+  return CHAPTERS.find((c) => c.id === id);
+}
+
 export function getLatestLiveChapter(): Chapter | undefined {
   return CHAPTERS.find((c) => c.status === "live");
 }

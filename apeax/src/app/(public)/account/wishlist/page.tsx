@@ -16,7 +16,7 @@ export default function WishlistPage() {
 
       {wishlistProducts.length === 0 ? (
         <p className="font-body text-apeax-cod-gray/60">
-          Your wishlist is empty — tap the heart icon on any product to save it here.
+           Nothing saved yet. Tap the heart on any piece to hold it for later.
         </p>
       ) : (
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">

@@ -21,6 +21,7 @@ export const FOOTER_LINK_GROUPS: FooterLinkGroup[] = [
       { label: "Help Centre", href: "/faq" },
       { label: "Return & Refund", href: "/faq#returns" },
       { label: "Order Tracking", href: "/faq#orders" },
+      { label: "Size Guide", href: "/size-guide" },
     ],
   },
   {

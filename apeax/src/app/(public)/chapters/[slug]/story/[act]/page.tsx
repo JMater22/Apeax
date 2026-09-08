@@ -101,7 +101,7 @@ export default async function StoryReaderPage({ params }: StoryReaderPageProps) 
           </h2>
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
             {ALL_PRODUCTS.filter((p) => story.relatedProductSlugs.includes(p.slug)).map(
-              (product) => (
+              (product: (typeof ALL_PRODUCTS)[number]) => (
                 <ProductCard key={product.id} product={product} />
               ),
             )}

@@ -3,13 +3,17 @@ export interface Act {
   slug: string;
   number: number;
   title: string;
-  content: string;
-  featuredProductSlug: string;  // the one merch item this Act tells the story of
+  dek: string;
+  content: string[];
+  pullQuote: string;
+  featuredProductSlug: string;
 }
 
 export interface StoryChapter {
   chapterSlug: string;
   title: string;
+  dek: string;
+  byline: string;
   acts: Act[];
-  relatedProductSlugs: string[]; // fallback "shop the full chapter" grid, shown after the last act
+  relatedProductSlugs: string[];
 }

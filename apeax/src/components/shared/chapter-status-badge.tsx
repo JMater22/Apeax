@@ -4,7 +4,7 @@ import { type ChapterStatus } from "@/types/chapter";
 const STATUS_CONFIG: Record<ChapterStatus, { label: string; variant: "default" | "secondary" | "destructive" }> = {
   live: { label: "New", variant: "default" },
   upcoming: { label: "Coming Soon", variant: "secondary" },
-  "sold-out": { label: "Sold Out", variant: "destructive" },
+  "sold-out": { label: "Fully Claimed", variant: "destructive" },
 };
 
 export function ChapterStatusBadge({ status }: { status: ChapterStatus }) {
