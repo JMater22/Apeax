@@ -4,6 +4,7 @@ import { ScarcityTicker } from "@/components/shared/scarcity-ticker";
 import { FeaturedCollections } from "@/features/home/featured-collections";
 import { FeaturedProducts } from "@/features/home/featured-products";
 import { FeaturedChapterSpotlight } from "@/features/home/featured-chapter-spotlight";
+import { CharterMembersTeaser } from "@/features/home/charter-members-teaser";
 import { StoryPreview } from "@/features/home/story-preview";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function HomePage() {
       <FeaturedCollections />
       <FeaturedProducts />
       <FeaturedChapterSpotlight />
+      <CharterMembersTeaser />
       <StoryPreview />
     </>
   );

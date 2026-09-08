@@ -1,67 +1,38 @@
 import { notFound } from "next/navigation";
-import { Container } from "@/components/layout/container";
-import { Badge } from "@/components/ui/badge";
-import { type AuthenticityRecord } from "@/types/authenticity";
-
-// TODO: replace with real lookup from services/authenticity.service.ts (Sprint 7/8)
-const MOCK_RECORDS: Record<string, AuthenticityRecord> = {
-  "APEAX-CH1-EXCEED-042": {
-    serial: "APEAX-CH1-EXCEED-042",
-    productName: "Exceed Limits Hoodie",
-    chapterTitle: "Chapter One: Exceed Limits",
-    editionNumber: 42,
-    editionSize: 300,
-    ownerName: "Marco D.",
-    claimedAt: "2026-06-15",
-  },
-  "APEAX-CH1-EXCEED-999": {
-    serial: "APEAX-CH1-EXCEED-999",
-    productName: "Exceed Limits Hoodie",
-    chapterTitle: "Chapter One: Exceed Limits",
-    editionNumber: 999,
-    editionSize: 300,
-    ownerName: null,
-    claimedAt: null,
-  },
-};
+import type { Metadata } from "next";
+import { VerifyCertificate } from "@/components/shared/verify-certificate";
+import { getCharterMemberBySerial } from "@/lib/data/charter-members";
+import { getProductBySlug } from "@/lib/data/products";
+import { getChapterById } from "@/lib/data/chapters";
+import { STORY_CHAPTERS } from "@/lib/data/story-chapters";
 
 interface VerifyPageProps {
   params: Promise<{ serial: string }>;
 }
 
+export async function generateMetadata({ params }: VerifyPageProps): Promise<Metadata> {
+  const { serial } = await params;
+  const member = getCharterMemberBySerial(serial.toUpperCase());
+  if (!member) return { title: "Verification Not Found | APEAX" };
+  const product = getProductBySlug(member.productSlug);
+  return {
+    title: `Verified: ${product?.name ?? "APEAX Piece"} | APEAX`,
+    description: `Edition ${member.editionNumber} — registered and verified authentic.`,
+  };
+}
+
 export default async function VerifyPage({ params }: VerifyPageProps) {
   const { serial } = await params;
-  const record = MOCK_RECORDS[serial];
+  const member = getCharterMemberBySerial(serial.toUpperCase());
 
-  if (!record) notFound();
+  if (!member) notFound();
 
-  const isClaimed = Boolean(record.ownerName);
+  const product = getProductBySlug(member.productSlug);
+  const chapter = getChapterById(member.chapterId);
 
-  return (
-    <Container className="flex min-h-[70vh] flex-col items-center justify-center py-16 text-center">
-      <Badge variant={isClaimed ? "default" : "secondary"} className="mb-6">
-        {isClaimed ? "Verified Authentic" : "Unclaimed"}
-      </Badge>
+  if (!product || !chapter) notFound();
 
-      <h1 className="font-condensed text-3xl uppercase text-foreground">{record.productName}</h1>
-      <p className="mt-1 text-sm text-muted-foreground">{record.chapterTitle}</p>
+  const hasStory = Boolean(STORY_CHAPTERS[chapter.slug]);
 
-      <div className="mt-8 flex flex-col gap-2 text-sm">
-        <p className="text-foreground">
-          Edition{" "}
-          <span className="font-medium">
-            {record.editionNumber} / {record.editionSize}
-          </span>
-        </p>
-        <p className="text-foreground">
-          {isClaimed ? (
-            <>Registered to <span className="font-medium">{record.ownerName}</span></>
-          ) : (
-            "This item has not been claimed by its owner yet."
-          )}
-        </p>
-        <p className="font-mono text-xs text-muted-foreground">{record.serial}</p>
-      </div>
-    </Container>
-  );
+  return <VerifyCertificate member={member} product={product} chapter={chapter} hasStory={hasStory} />;
 }

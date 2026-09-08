@@ -128,17 +128,22 @@ export function ScrollStory({ story, chapter }: ScrollStoryProps) {
         </motion.div>
       </section>
 
-      <div className="fixed right-6 top-1/2 z-20 hidden -translate-y-1/2 flex-col gap-3 lg:flex">
+      <div className="pointer-events-none fixed right-6 top-1/2 z-[100] hidden -translate-y-1/2 flex-col items-center gap-1 lg:flex">
         {story.acts.map((act, i) => (
           <button
             key={act.id}
+            type="button"
             onClick={() => jumpToAct(i)}
             aria-label={`Go to Act ${act.number}`}
-            className={cn(
-              "h-2 w-2 rounded-full transition-all",
-              i === activeIndex ? "scale-125 bg-apeax-cod-gray" : "bg-apeax-westar",
-            )}
-          />
+            className="pointer-events-auto flex h-8 w-8 cursor-pointer items-center justify-center"
+          >
+            <span
+              className={cn(
+                "block h-2 w-2 rounded-full transition-all",
+                i === activeIndex ? "scale-125 bg-apeax-cod-gray" : "bg-apeax-westar",
+              )}
+            />
+          </button>
         ))}
       </div>
 
