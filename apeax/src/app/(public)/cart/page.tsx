@@ -6,10 +6,18 @@ import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { CartLineItem } from "@/components/shared/cart-line-item";
 import { CartSummary } from "@/components/shared/cart-summary";
-import { useCart } from "@/hooks/use-cart";
+import { ProductCard } from "@/components/shared/product-card";
 import { ShippingDeadlineBanner } from "@/components/shared/shipping-deadline-banner";
+import { useCart } from "@/hooks/use-cart";
+import { ALL_PRODUCTS } from "@/lib/data/products";
+
 export default function CartPage() {
   const { items, subtotal } = useCart();
+
+  const cartSlugs = new Set(items.map((i) => i.productSlug));
+  const suggestions = ALL_PRODUCTS.filter(
+    (p) => !cartSlugs.has(p.slug) && !p.isSoldOut,
+  ).slice(0, 4);
 
   return (
     <>
@@ -17,7 +25,9 @@ export default function CartPage() {
       <Container className="py-16">
         {items.length === 0 ? (
           <div className="flex flex-col items-center gap-4 py-16 text-center">
-            <p className="font-body text-apeax-cod-gray/60">Nothing claimed yet. The story is waiting.</p>
+            <p className="font-body text-apeax-cod-gray/60">
+              Nothing claimed yet. The story is waiting.
+            </p>
             <Link href="/shop">
               <Button variant="default" className="font-sans text-xs uppercase tracking-wide">
                 Continue Shopping
@@ -37,6 +47,19 @@ export default function CartPage() {
                 <CartSummary subtotal={subtotal} />
               </div>
             </div>
+
+            {suggestions.length > 0 && (
+              <div className="mt-8 border-t border-apeax-westar pt-10">
+                <h2 className="mb-6 font-condensed text-lg uppercase tracking-wide text-apeax-cod-gray">
+                  Complete the Look
+                </h2>
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+                  {suggestions.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </Container>

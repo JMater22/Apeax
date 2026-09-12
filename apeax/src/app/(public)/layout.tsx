@@ -2,6 +2,7 @@ import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SocialProofToast } from "@/components/shared/social-proof-toast";
+import { CartAddedModal } from "@/components/shared/cart-added-modal";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,6 +11,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <Navbar />
       <main>{children}</main>
       <SocialProofToast />
+      <CartAddedModal />
       <Footer />
     </>
   );

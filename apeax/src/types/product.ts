@@ -6,6 +6,14 @@ export interface ProductVariant {
   stock: number;
 }
 
+export interface ProductColorOption {
+  id: string;
+  label: string;
+  /** Hex color used to render the swatch dot */
+  swatch: string;
+  variants: ProductVariant[];
+}
+
 export interface ProductDetails {
   material: string;
   fit: string;
@@ -24,9 +32,11 @@ export interface Product {
   editionSize?: number;
   unitsSold?: number;
   isSoldOut?: boolean;
+  /** Used when a product has no color choice — a single size run */
   variants?: ProductVariant[];
+  /** Used when a product ships in multiple colors, each with its own sizes */
+  colorOptions?: ProductColorOption[];
   details?: ProductDetails;
   story: string;
-  /** Short code used to build this product's serial, e.g. "TEE" → APEAX-CH1-TEE-001 */
   serialCode?: string;
 }

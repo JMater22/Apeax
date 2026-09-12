@@ -6,7 +6,9 @@ import { getProductsByChapter } from "@/lib/data/products";
 import Link from "next/link";
 
 export function FeaturedProducts() {
-  const products = getProductsByChapter("1").slice(0, 4);
+  const products = getProductsByChapter("1")
+  .filter((p) => !p.isSoldOut)
+  .slice(0, 4);
 
   return (
     <section className="border-b border-apeax-westar py-16 md:py-24">

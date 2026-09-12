@@ -1,19 +1,30 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { OrderStatusBadge } from "@/components/shared/order-status-badge";
-import { MOCK_ORDERS } from "@/lib/data/mock-account";
+import { getStoredOrders } from "@/lib/orders-storage";
 import { formatCurrency } from "@/lib/format-currency";
+import { type Order } from "@/types/account";
 
 export default function OrderHistoryPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of a browser-only value, not an external subscription
+    setOrders(getStoredOrders());
+  }, []);
+
   return (
     <div>
       <h2 className="mb-6 font-condensed text-lg uppercase tracking-wide text-apeax-cod-gray">
         Order History
       </h2>
 
-      {MOCK_ORDERS.length === 0 ? (
+      {orders.length === 0 ? (
         <p className="font-body text-apeax-cod-gray/60">You haven&apos;t placed any orders yet.</p>
       ) : (
         <div className="flex flex-col gap-4">
-          {MOCK_ORDERS.map((order) => (
+          {orders.map((order) => (
             <div key={order.id} className="border border-apeax-westar p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
@@ -21,7 +32,8 @@ export default function OrderHistoryPage() {
                     {order.orderNumber}
                   </p>
                   <p className="font-sans text-xs text-apeax-cod-gray/60">
-                    Placed {new Date(order.placedAt).toLocaleDateString("en-PH", {
+                    Placed{" "}
+                    {new Date(order.placedAt).toLocaleDateString("en-PH", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",

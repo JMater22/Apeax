@@ -82,7 +82,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               )}
             </div>
 
-            {product.variants && product.variants.length > 0 && (
+            {(product.variants?.length || product.colorOptions?.length) ? (
               <div className="mt-8">
                 <VariantSelector
                   productSlug={product.slug}
@@ -90,9 +90,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   price={product.price}
                   imageUrl={product.imageUrl}
                   variants={product.variants}
+                  colorOptions={product.colorOptions}
                 />
               </div>
-            )}
+            ) : null}
 
             {product.details && <ProductDetailsSection details={product.details} />}
           </div>

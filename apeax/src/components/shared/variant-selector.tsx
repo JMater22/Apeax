@@ -7,14 +7,15 @@ import { Button } from "@/components/ui/button";
 import { BrandImage } from "@/components/shared/brand-image";
 import { useCart } from "@/hooks/use-cart";
 import { formatCurrency } from "@/lib/format-currency";
-import { type ProductVariant } from "@/types/product";
+import { type ProductVariant, type ProductColorOption } from "@/types/product";
 
 interface VariantSelectorProps {
   productSlug: string;
   productName: string;
   price: number;
   imageUrl?: string;
-  variants: ProductVariant[];
+  variants?: ProductVariant[];
+  colorOptions?: ProductColorOption[];
 }
 
 export function VariantSelector({
@@ -23,17 +24,25 @@ export function VariantSelector({
   price,
   imageUrl,
   variants,
+  colorOptions,
 }: VariantSelectorProps) {
   const { addItem } = useCart();
+  const hasColors = Boolean(colorOptions && colorOptions.length > 0);
+
+  const [selectedColorId, setSelectedColorId] = useState(colorOptions?.[0]?.id);
+  const activeVariants = hasColors
+    ? colorOptions!.find((c) => c.id === selectedColorId)?.variants ?? []
+    : variants ?? [];
+
   const [selectedId, setSelectedId] = useState(
-    variants.find((v) => v.stock > 0)?.id ?? variants[0]?.id,
+    activeVariants.find((v) => v.stock > 0)?.id ?? activeVariants[0]?.id,
   );
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
 
-  const selectedVariant = variants.find((v) => v.id === selectedId);
+  const selectedVariant = activeVariants.find((v) => v.id === selectedId);
   const isAvailable = selectedVariant && selectedVariant.stock > 0;
   const maxQuantity = selectedVariant ? Math.min(selectedVariant.stock, 10) : 1;
 
@@ -48,6 +57,13 @@ export function VariantSelector({
     return () => observer.disconnect();
   }, []);
 
+  function handleSelectColor(colorId: string) {
+    setSelectedColorId(colorId);
+    const nextVariants = colorOptions!.find((c) => c.id === colorId)?.variants ?? [];
+    setSelectedId(nextVariants.find((v) => v.stock > 0)?.id ?? nextVariants[0]?.id);
+    setQuantity(1);
+  }
+
   function handleSelectVariant(variantId: string) {
     setSelectedId(variantId);
     setQuantity(1);
@@ -55,13 +71,15 @@ export function VariantSelector({
 
   function handleAddToCart() {
     if (!selectedVariant || !isAvailable) return;
+    const colorLabel = hasColors ? colorOptions!.find((c) => c.id === selectedColorId)?.label : undefined;
+    const variantLabel = colorLabel ? `${colorLabel} / ${selectedVariant.label}` : selectedVariant.label;
     addItem(
       {
-        id: `${productSlug}-${selectedVariant.id}`,
+        id: `${productSlug}-${selectedColorId ?? "default"}-${selectedVariant.id}`,
         productSlug,
         name: productName,
         price,
-        variantLabel: selectedVariant.label,
+        variantLabel,
         imageUrl,
       },
       quantity,
@@ -79,8 +97,35 @@ export function VariantSelector({
 
   return (
     <div>
+      {hasColors && (
+        <div className="mb-4">
+          <p className="mb-2 font-sans text-xs uppercase tracking-wide text-apeax-cod-gray/70">
+            Color:{" "}
+            <span className="font-medium text-apeax-cod-gray">
+              {colorOptions!.find((c) => c.id === selectedColorId)?.label}
+            </span>
+          </p>
+          <div className="flex gap-2">
+            {colorOptions!.map((color) => (
+              <button
+                key={color.id}
+                type="button"
+                onClick={() => handleSelectColor(color.id)}
+                aria-label={`Select color ${color.label}`}
+                aria-pressed={selectedColorId === color.id}
+                className={cn(
+                  "h-8 w-8 rounded-full border-2 transition-all",
+                  selectedColorId === color.id ? "border-apeax-cod-gray scale-110" : "border-transparent",
+                )}
+                style={{ backgroundColor: color.swatch }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2">
-        {variants.map((variant) => {
+        {activeVariants.map((variant) => {
           const isOutOfStock = variant.stock === 0;
           return (
             <button

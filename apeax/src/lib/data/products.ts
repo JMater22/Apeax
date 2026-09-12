@@ -7,7 +7,16 @@ export const ALL_PRODUCTS: Product[] = [
     category: "shirt", chapterId: "1", editionSize: 500, unitsSold: 500, isSoldOut: true,
     placeholderColor: "bg-apeax-cod-gray", imageUrl: "/images/mock-lookbook/Tee-Dark-Palette.png",
     serialCode: "TEE",
-    variants: [{ id: "s", label: "S", stock: 0 }, { id: "m", label: "M", stock: 0 }, { id: "l", label: "L", stock: 0 }, { id: "xl", label: "XL", stock: 0 }],
+    colorOptions: [
+      {
+        id: "black", label: "Black", swatch: "#0a0a0a",
+        variants: [{ id: "s", label: "S", stock: 0 }, { id: "m", label: "M", stock: 0 }, { id: "l", label: "L", stock: 0 }, { id: "xl", label: "XL", stock: 0 }],
+      },
+      {
+        id: "off-white", label: "Off-White", swatch: "#f5f4f2",
+        variants: [{ id: "s", label: "S", stock: 25 }, { id: "m", label: "M", stock: 30 }, { id: "l", label: "L", stock: 28 }, { id: "xl", label: "XL", stock: 20 }],
+      },
+    ],
     details: { material: "100% Heavyweight Cotton, 240 GSM", fit: "Oversized Fit", care: ["Machine wash cold, inside out", "Do not bleach", "Tumble dry low", "Do not iron print"] },
     story: "This is the first piece of the story — worn in Act One, The Breaking Point. Before growth, there is a ceiling. Before becoming, there is the moment you decide to break it. The Exceed Limits Tee marks that decision: plain, heavyweight, unwilling to apologize for taking up space.",
   },
