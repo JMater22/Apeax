@@ -14,6 +14,7 @@ import { getReviewsForProduct, getAverageRating } from "@/lib/data/reviews";
 import { getChapterById } from "@/lib/data/chapters";
 import { STORY_CHAPTERS } from "@/lib/data/story-chapters";
 import { formatCurrency } from "@/lib/format-currency";
+import { AuthenticityBadge } from "@/components/shared/authenticity-badge";
 
 interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -58,7 +59,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </p>
 
             {product.editionSize && (
-              <EditionCounter claimed={product.unitsSold ?? 0} total={product.editionSize} />
+              <>
+                <EditionCounter claimed={product.unitsSold ?? 0} total={product.editionSize} />
+                <AuthenticityBadge />
+              </>
             )}
 
             <div className="mt-6 border-l-2 border-apeax-westar pl-4">

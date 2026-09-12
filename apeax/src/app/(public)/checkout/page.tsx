@@ -26,6 +26,7 @@ const EMPTY_ADDRESS: ShippingAddress = {
   postalCode: "",
   phone: "",
 };
+import { buildProductSerial } from "@/lib/serial";
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
@@ -39,13 +40,18 @@ export default function CheckoutPage() {
   const total = subtotal + shippingCost;
 
   function handlePlaceOrder() {
-    // TODO: replace with a real order.service.ts POST once backend exists (Sprint 7)
+    // TODO: replace with a real order.service.ts POST once backend exists
+    // (Sprint 7). The backend must generate each serial exactly once at order
+    // creation and persist it — never regenerate on subsequent views. A serial
+    // is only ever invalidated if the order is cancelled before fulfillment.
     const orderSnapshot = {
       items: items.map((item) => {
         const product = getProductBySlug(item.productSlug);
         const editionSize = product?.editionSize ?? 0;
         const editionNumber =
           editionSize > 0 ? Math.floor(Math.random() * editionSize) + 1 : null;
+        const serial =
+          product && editionNumber !== null ? buildProductSerial(product, editionNumber) : null;
         return {
           name: item.name,
           variantLabel: item.variantLabel,
@@ -53,6 +59,7 @@ export default function CheckoutPage() {
           price: item.price,
           editionNumber,
           editionSize,
+          serial,
         };
       }),
       total,

@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import QRCode from "qrcode";
 import { CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/shared/reveal";
 import { formatCurrency } from "@/lib/format-currency";
+
+const SITE_URL = "https://apeax.vercel.app";
 
 interface OrderItemSnapshot {
   name: string;
@@ -15,6 +18,7 @@ interface OrderItemSnapshot {
   price: number;
   editionNumber: number | null;
   editionSize: number;
+  serial: string | null;
 }
 
 interface OrderSnapshot {
@@ -27,10 +31,20 @@ export default function OrderConfirmationPage() {
     if (typeof window === "undefined") return null;
 
     const raw = window.sessionStorage.getItem("apeax_last_order");
-    return raw ? (JSON.parse(raw) as OrderSnapshot) : null;
+    return raw ? JSON.parse(raw) : null;
   });
+  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
 
-  const highlightItem = order?.items.find((item) => item.editionNumber !== null);
+  const highlightItem = order?.items.find((item) => item.serial);
+
+  useEffect(() => {
+    if (!highlightItem?.serial) return;
+    QRCode.toDataURL(`${SITE_URL}/verify/${highlightItem.serial}`, {
+      width: 200,
+      margin: 1,
+      color: { dark: "#0a0a0a", light: "#ffffff" },
+    }).then(setQrDataUrl);
+  }, [highlightItem?.serial]);
 
   return (
     <Container className="flex min-h-[70vh] flex-col items-center justify-center py-16 text-center">
@@ -52,6 +66,22 @@ export default function OrderConfirmationPage() {
             Piece {highlightItem.editionNumber} / {highlightItem.editionSize}
           </p>
           <p className="mt-2 font-sans text-sm text-apeax-cod-gray/70">{highlightItem.name}</p>
+
+          {qrDataUrl && (
+            <div className="mt-6 flex flex-col items-center gap-2 border-t border-apeax-westar pt-6">
+              {/* eslint-disable-next-line @next/next/no-img-element -- data: URL, next/image doesn't optimize these */}
+              <img
+                src={qrDataUrl}
+                alt="QR code that will be printed on this piece's authenticity tag"
+                width={112}
+                height={112}
+                className="border border-apeax-westar"
+              />
+              <p className="max-w-[220px] font-sans text-[10px] uppercase tracking-wide text-apeax-cod-gray/40">
+                This is the tag that ships with your piece — save it
+              </p>
+            </div>
+          )}
         </Reveal>
       )}
 

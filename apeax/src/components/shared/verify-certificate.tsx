@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { CheckCircle2, Link2, QrCode } from "lucide-react";
+import { CheckCircle2, Link2, ScanLine } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BrandImage } from "@/components/shared/brand-image";
 import { formatCurrency } from "@/lib/format-currency";
 import { type CharterMember } from "@/types/charter-member";
 import { type Product } from "@/types/product";
 import { type Chapter } from "@/types/chapter";
-import { type StoryChapter } from "@/types/story";
 
 interface VerifyCertificateProps {
   member: CharterMember;
@@ -156,9 +155,9 @@ export function VerifyCertificate({ member, product, chapter, hasStory }: Verify
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-1.5 border-t border-apeax-westar pt-4">
-              <QrCode size={13} className="text-apeax-cod-gray/30" />
+              <ScanLine size={13} className="text-apeax-cod-gray/30" />
               <p className="font-sans text-[10px] uppercase tracking-wide text-apeax-cod-gray/40">
-                Verified via the QR tag on this piece
+                You scanned this piece&apos;s authenticity tag
               </p>
             </div>
           </motion.div>

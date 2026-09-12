@@ -26,6 +26,7 @@ export interface Product {
   isSoldOut?: boolean;
   variants?: ProductVariant[];
   details?: ProductDetails;
-  /** Every product's own narrative passage — required so no product is ever left without a story. */
   story: string;
+  /** Short code used to build this product's serial, e.g. "TEE" → APEAX-CH1-TEE-001 */
+  serialCode?: string;
 }
