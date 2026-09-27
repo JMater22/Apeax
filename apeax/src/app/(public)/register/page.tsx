@@ -6,21 +6,40 @@ import { useRouter } from "next/navigation";
 import { AuthCard } from "@/components/shared/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const supabase = createClient();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setError("");
     setIsSubmitting(true);
-    // TODO: replace with real Supabase auth.signUp() call (Sprint 7)
-    setTimeout(() => {
-      router.push("/account");
-    }, 600);
+
+    // full_name is stored in auth user_metadata for now. Once the profiles
+    // table exists (next step), this should also insert a row there.
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName },
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.push("/account");
+    router.refresh();
   }
 
   return (
@@ -58,6 +77,8 @@ export default function RegisterPage() {
           />
           <p className="mt-1 font-sans text-xs text-apeax-cod-gray/50">Minimum 8 characters.</p>
         </div>
+
+        {error && <p className="font-sans text-xs text-destructive">{error}</p>}
 
         <Button
           type="submit"

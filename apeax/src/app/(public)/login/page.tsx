@@ -6,20 +6,31 @@ import { useRouter } from "next/navigation";
 import { AuthCard } from "@/components/shared/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const supabase = createClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setError("");
     setIsSubmitting(true);
-    // TODO: replace with real Supabase auth.signInWithPassword() call (Sprint 7)
-    setTimeout(() => {
-      router.push("/account");
-    }, 600);
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      setError(error.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.push("/account");
+    router.refresh();
   }
 
   return (
@@ -56,6 +67,8 @@ export default function LoginPage() {
             required
           />
         </div>
+
+        {error && <p className="font-sans text-xs text-destructive">{error}</p>}
 
         <Button
           type="submit"
